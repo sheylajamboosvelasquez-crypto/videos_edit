@@ -4,3 +4,7 @@
 *.mp3
 salida/trabajo/frames/
 salida/trabajo/clave/
+salida/trabajo/seg/
+salida/trabajo/voz/
+salida/trabajo/previa/
+salida/trabajo/*.log

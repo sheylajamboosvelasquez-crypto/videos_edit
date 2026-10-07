@@ -1,0 +1,264 @@
+[
+ {
+  "id": "b0",
+  "start": 0.0,
+  "dur": 13.9333,
+  "voice": 13.032,
+  "cues": {}
+ },
+ {
+  "id": "b1",
+  "start": 13.9333,
+  "dur": 27.3333,
+  "voice": 26.448,
+  "cues": {
+   "identificamos": 12.155,
+   "calculamos": 16.67,
+   "comparamos": 19.831,
+   "explicamos": 23.186,
+   "El objetivo general": 0.35
+  }
+ },
+ {
+  "id": "b2a",
+  "start": 41.2666,
+  "dur": 14.2333,
+  "voice": 13.32,
+  "cues": {
+   "La ley": 0.35,
+   "Los materiales": 10.032
+  }
+ },
+ {
+  "id": "b2b",
+  "start": 55.4999,
+  "dur": 15.5333,
+  "voice": 14.64,
+  "cues": {
+   "La corriente": 3.453,
+   "el voltaje de la fuente": 5.815,
+   "y la resistencia equivalente": 9.053
+  }
+ },
+ {
+  "id": "b2c",
+  "start": 71.0332,
+  "dur": 16.7,
+  "voice": 15.816,
+  "cues": {
+   "El voltaje": 5.201,
+   "la corriente total": 7.461,
+   "y la equivalente": 13.176
+  }
+ },
+ {
+  "id": "b2d",
+  "start": 87.7332,
+  "dur": 20.5667,
+  "voice": 19.68,
+  "cues": {
+   "en un lazo": 3.595,
+   "en un nodo": 8.321,
+   "en una bombilla": 16.644,
+   "Además": 12.482
+  }
+ },
+ {
+  "id": "b2e",
+  "start": 108.2999,
+  "dur": 19.7,
+  "voice": 18.816,
+  "cues": {
+   "la resistencia se mide": 11.309,
+   "el voltaje en paralelo": 13.686,
+   "y la corriente": 16.327
+  }
+ },
+ {
+  "id": "b3",
+  "start": 127.9999,
+  "dur": 19.0333,
+  "voice": 18.12,
+  "cues": {
+   "Usamos": 0.35,
+   "el laboratorio": 3.068,
+   "la interfaz": 8.116,
+   "el software": 10.963,
+   "tres resistencias": 13.875
+  }
+ },
+ {
+  "id": "b4a",
+  "start": 147.0332,
+  "dur": 16.2667,
+  "voice": 15.36,
+  "cues": {
+   "Primero": 0.35,
+   "Las medimos": 12.199
+  }
+ },
+ {
+  "id": "b4b",
+  "start": 163.2999,
+  "dur": 24.1333,
+  "voice": 23.232,
+  "cues": {
+   "Luego armamos": 0.35,
+   "con el cable rojo": 2.767,
+   "Con la fuente": 6.662,
+   "Después energizamos": 10.892,
+   "con el sensor": 16.062,
+   "y la corriente": 18.949
+  }
+ },
+ {
+  "id": "b4c",
+  "start": 187.4332,
+  "dur": 15.4667,
+  "voice": 14.568,
+  "cues": {
+   "Después conectamos": 0.35,
+   "Medimos la resistencia": 5.932,
+   "y con la fuente": 9.2,
+   "y la total": 14.169
+  }
+ },
+ {
+  "id": "b5a",
+  "start": 202.8999,
+  "dur": 11.8333,
+  "voice": 10.92,
+  "cues": {
+   "trescientos veintiocho coma dos": 1.982,
+   "trescientos veintiocho coma cero": 4.053,
+   "quinientos cincuenta y cuatro": 6.249
+  }
+ },
+ {
+  "id": "b5b",
+  "start": 214.7332,
+  "dur": 16.8,
+  "voice": 15.912,
+  "cues": {
+   "la corriente fue la misma": 1.057,
+   "dos coma sesenta y seis": 8.483,
+   "dos coma setenta en": 11.453,
+   "cuatro coma cincuenta y seis": 13.504
+  }
+ },
+ {
+  "id": "b5c",
+  "start": 231.5332,
+  "dur": 16.7,
+  "voice": 15.792,
+  "cues": {
+   "cada rama": 1.275,
+   "cero coma cero treinta y uno": 7.037,
+   "cero coma cero diecisiete": 11.163
+  }
+ },
+ {
+  "id": "b6a",
+  "start": 248.2332,
+  "dur": 35.9333,
+  "voice": 35.04,
+  "cues": {
+   "Con los valores": 0.35,
+   "La corriente": 12.368,
+   "Así, R uno": 20.259,
+   "y R tres": 24.675,
+   "Sumados": 27.571,
+   "La potencia": 31.263
+  }
+ },
+ {
+  "id": "b6b",
+  "start": 284.1665,
+  "dur": 35.0667,
+  "voice": 34.152,
+  "cues": {
+   "En paralelo": 0.35,
+   "Su inverso": 11.142,
+   "Cada rama": 14.694,
+   "y la de quinientos": 20.705,
+   "La corriente total": 25.281,
+   "y la potencia": 30.404
+  }
+ },
+ {
+  "id": "b7a",
+  "start": 319.2332,
+  "dur": 27.5667,
+  "voice": 26.664,
+  "cues": {
+   "Con los valores": 0.35,
+   "y los voltajes": 6.472,
+   "En paralelo": 13.546,
+   "El óhmetro": 23.477
+  }
+ },
+ {
+  "id": "b7b",
+  "start": 346.7999,
+  "dur": 32.0,
+  "voice": 31.104,
+  "cues": {
+   "el error fue": 2.014,
+   "y cero coma cincuenta y cinco": 5.982,
+   "Por ley de Ohm": 11.038,
+   "nueve coma sesenta y seis": 13.726,
+   "En paralelo, el error": 27.55
+  }
+ },
+ {
+  "id": "b8a",
+  "start": 378.7999,
+  "dur": 16.3,
+  "voice": 15.408,
+  "cues": {
+   "cada una recibe": 5.486,
+   "Con la mitad": 8.356
+  }
+ },
+ {
+  "id": "b8b",
+  "start": 395.0999,
+  "dur": 16.6333,
+  "voice": 15.744,
+  "cues": {
+   "Cada una recibe": 3.098,
+   "así que brillan": 8.668,
+   "Si una": 12.678
+  }
+ },
+ {
+  "id": "b8c",
+  "start": 411.7332,
+  "dur": 21.1,
+  "voice": 20.208,
+  "cues": {
+   "Ese bloque": 5.145,
+   "así que L uno": 9.324,
+   "y disipa": 16.79
+  }
+ },
+ {
+  "id": "b9",
+  "start": 432.8332,
+  "dur": 28.2333,
+  "voice": 27.336,
+  "cues": {
+   "se validaron": 1.31,
+   "La resistencia equivalente": 4.703,
+   "Las medidas": 10.529,
+   "Y la forma": 16.483
+  }
+ },
+ {
+  "id": "b10",
+  "start": 461.0665,
+  "dur": 4.0,
+  "voice": 0.0,
+  "cues": {}
+ }
+]
