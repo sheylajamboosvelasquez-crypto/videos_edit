@@ -8,3 +8,4 @@ salida/trabajo/seg/
 salida/trabajo/voz/
 salida/trabajo/previa/
 salida/trabajo/*.log
+__pycache__/
