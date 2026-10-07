@@ -1,0 +1,427 @@
+1
+00:00:00,350 --> 00:00:05,740
+En este video presentamos la experiencia
+número cuatro de Física de campos:
+
+2
+00:00:05,780 --> 00:00:08,202
+circuitos resistivos y ley de Ohm.
+
+3
+00:00:08,242 --> 00:00:13,342
+Veremos el montaje, la teoría, los
+cálculos y el cuestionario resuelto.
+
+4
+00:00:14,283 --> 00:00:19,088
+El objetivo general es analizar
+experimentalmente la corriente, el voltaje
+
+5
+00:00:19,128 --> 00:00:21,772
+y la resistencia equivalente en circuitos
+
+6
+00:00:21,812 --> 00:00:24,521
+en serie y en paralelo, verificando la ley
+
+7
+00:00:24,561 --> 00:00:27,140
+de Ohm. Para lograrlo, identificamos las
+
+8
+00:00:27,180 --> 00:00:32,050
+resistencias con el código de colores y el
+óhmetro, calculamos y medimos la
+
+9
+00:00:32,090 --> 00:00:37,025
+resistencia equivalente, comparamos
+corrientes y voltajes en cada elemento y
+
+10
+00:00:37,065 --> 00:00:40,691
+explicamos el brillo de bombillas en
+distintos arreglos.
+
+11
+00:00:41,617 --> 00:00:44,141
+La ley de Ohm dice que la corriente en un
+
+12
+00:00:44,181 --> 00:00:46,704
+conductor es directamente proporcional al
+
+13
+00:00:46,744 --> 00:00:51,207
+voltaje entre sus extremos e inversamente
+proporcional a su resistencia.
+
+14
+00:00:51,247 --> 00:00:54,897
+Los materiales que la cumplen se llaman
+óhmicos o lineales.
+
+15
+00:00:55,850 --> 00:01:01,283
+En serie, las resistencias van una tras
+otra. La corriente es la misma en todas,
+
+16
+00:01:01,323 --> 00:01:04,019
+el voltaje de la fuente se reparte entre
+
+17
+00:01:04,059 --> 00:01:09,082
+ellas, y la resistencia equivalente es la
+suma de todas, siempre mayor que
+
+18
+00:01:09,122 --> 00:01:10,450
+cualquiera de ellas.
+
+19
+00:01:11,383 --> 00:01:16,189
+En paralelo, todas las resistencias se
+conectan a los mismos dos puntos.
+
+20
+00:01:16,229 --> 00:01:21,237
+El voltaje es igual en cada rama, la
+corriente total se divide, pasando más
+
+21
+00:01:21,277 --> 00:01:26,150
+corriente por la rama de menor
+resistencia, y la equivalente es menor que
+
+22
+00:01:26,190 --> 00:01:27,159
+la más pequeña.
+
+23
+00:01:28,083 --> 00:01:33,124
+Estas reglas salen de las leyes de
+Kirchhoff: en un lazo, las caídas de
+
+24
+00:01:33,164 --> 00:01:38,706
+voltaje suman el voltaje de la fuente, y
+en un nodo, la corriente que entra es
+
+25
+00:01:38,746 --> 00:01:40,137
+igual a la que sale.
+
+26
+00:01:40,177 --> 00:01:43,143
+Además, una resistencia disipa potencia en
+
+27
+00:01:43,183 --> 00:01:47,723
+forma de calor; en una bombilla, a mayor
+potencia, mayor brillo.
+
+28
+00:01:48,650 --> 00:01:53,833
+Las resistencias comerciales traen un
+código de colores con su valor nominal y
+
+29
+00:01:53,873 --> 00:01:58,319
+su tolerancia; la banda dorada indica más
+o menos cinco por ciento.
+
+30
+00:01:58,359 --> 00:02:01,065
+Con el multímetro, la resistencia se mide
+
+31
+00:02:01,105 --> 00:02:06,020
+sin energía, el voltaje en paralelo con el
+elemento, y la corriente con el
+
+32
+00:02:06,060 --> 00:02:07,426
+instrumento en serie.
+
+33
+00:02:08,350 --> 00:02:14,899
+Usamos un multímetro Fluke 115, el
+laboratorio electrónico EM-8656 de PASCO,
+
+34
+00:02:14,939 --> 00:02:21,401
+la interfaz PASCO 850 con el software
+Capstone y un sensor de voltaje, tres
+
+35
+00:02:21,441 --> 00:02:26,430
+resistencias, una protoboard, una fuente
+de 10 V y cables.
+
+36
+00:02:27,383 --> 00:02:31,310
+Primero identificamos cada resistencia.
+
+37
+00:02:31,350 --> 00:02:37,821
+R1 y R2 son de 330 Ω y R3 de 560 Ω, todas
+con 5 % de tolerancia.
+
+38
+00:02:37,861 --> 00:02:42,703
+Las medimos con el óhmetro, siempre sin
+energía.
+
+39
+00:02:43,650 --> 00:02:46,540
+Luego armamos el circuito en serie, con el
+
+40
+00:02:46,580 --> 00:02:51,912
+cable rojo al mayor potencial y el negro
+al menor. Con la fuente desconectada
+
+41
+00:02:51,952 --> 00:02:54,354
+medimos la resistencia equivalente.
+
+42
+00:02:54,394 --> 00:02:57,144
+Después energizamos con 10 V, medimos el
+
+43
+00:02:57,184 --> 00:03:02,377
+voltaje en cada resistencia con el sensor
+de la interfaz, en paralelo, y la
+
+44
+00:03:02,417 --> 00:03:06,842
+corriente del lazo con el multímetro como
+amperímetro, en serie.
+
+45
+00:03:07,783 --> 00:03:13,309
+Después conectamos las tres resistencias
+entre los mismos dos nodos, en paralelo.
+
+46
+00:03:13,349 --> 00:03:18,875
+Medimos la resistencia equivalente sin
+energía, y con la fuente encendida medimos
+
+47
+00:03:18,915 --> 00:03:22,311
+el voltaje y la corriente de cada rama y
+la total.
+
+48
+00:03:23,250 --> 00:03:28,736
+Las resistencias midieron 328,2 Ω, 328,0 Ω
+
+49
+00:03:28,776 --> 00:03:34,130
+y 554,4 Ω, todas dentro de su tolerancia.
+
+50
+00:03:35,083 --> 00:03:44,541
+En serie, la corriente fue la misma en
+todo el lazo, 0,009 A, y el voltaje se
+
+51
+00:03:44,581 --> 00:03:50,955
+repartió: 2,66 V en R1, 2,70 V en R2 y
+4,56 V en R3.
+
+52
+00:03:51,883 --> 00:03:59,990
+En paralelo, cada rama recibió 9,95 V, y
+la corriente se dividió:
+
+53
+00:04:00,030 --> 00:04:07,635
+0,031 A en R1 y R2, y 0,017 A en R3, la de
+mayor resistencia.
+
+54
+00:04:08,583 --> 00:04:14,244
+Con los valores nominales, la resistencia
+
+55
+00:04:14,284 --> 00:04:25,507
+equivalente en serie es 330 + 330 + 560 =
+1220 Ω. La corriente es 10 V / 1220 Ω =
+
+56
+00:04:25,547 --> 00:04:36,631
+0,0082 A. Así, R1 y R2 tienen 2,70 V cada
+una, y R3 4,59 V. Sumados dan 10 V, el
+
+57
+00:04:36,671 --> 00:04:39,551
+voltaje de la fuente.
+
+58
+00:04:39,591 --> 00:04:43,583
+La potencia total es 0,082 W.
+
+59
+00:04:44,516 --> 00:04:50,086
+En paralelo, sumamos los inversos:
+
+60
+00:04:50,126 --> 00:04:56,190
+1/330 + 1/330 + 1/560 = 0,007846 Ω⁻¹.
+
+61
+00:04:56,230 --> 00:04:59,820
+Su inverso es 127,5 Ω.
+
+62
+00:04:59,860 --> 00:05:13,184
+Cada rama de 330 Ω lleva 0,0303 A, y la de
+560 Ω, 0,0179 A. La corriente total es
+
+63
+00:05:13,224 --> 00:05:18,628
+0,0785 A, y la potencia, 0,785 W.
+
+64
+00:05:19,583 --> 00:05:23,616
+Con los valores medidos, la equivalente en
+
+65
+00:05:23,656 --> 00:05:27,397
+serie es 1210,6 Ω, y los voltajes suman
+
+66
+00:05:27,437 --> 00:05:31,469
+9,92 V, lo que confirma la ley de voltajes
+
+67
+00:05:31,509 --> 00:05:39,323
+de Kirchhoff. En paralelo, las corrientes
+de rama suman 0,079 A, igual a la total
+
+68
+00:05:39,363 --> 00:05:46,207
+medida, lo que confirma la ley de
+corrientes. El óhmetro marcó 126,8 Ω.
+
+69
+00:05:47,150 --> 00:05:54,647
+Comparando con la teoría, el error fue de
+0,77 % en serie y 0,55 % en paralelo,
+
+70
+00:05:54,687 --> 00:05:56,937
+dentro de la tolerancia.
+
+71
+00:05:56,977 --> 00:06:00,849
+Por ley de Ohm, en serie el error subió a
+
+72
+00:06:00,889 --> 00:06:08,196
+9,66 %, porque la corriente medida, 0,009
+A, es cerca de un 10 % mayor que la
+
+73
+00:06:08,236 --> 00:06:14,779
+teórica; esto se atribuye a la lectura o a
+la escala del amperímetro.
+
+74
+00:06:14,819 --> 00:06:18,214
+En paralelo, el error fue de 1,25 %.
+
+75
+00:06:19,150 --> 00:06:21,640
+Figura a: dos bombillas en serie.
+
+76
+00:06:21,680 --> 00:06:27,082
+Comparten un solo camino, así que cada una
+recibe la mitad del voltaje.
+
+77
+00:06:27,122 --> 00:06:30,302
+Con la mitad del voltaje, disipa la cuarta
+
+78
+00:06:30,342 --> 00:06:34,518
+parte de la potencia, y por eso brillan de
+forma tenue.
+
+79
+00:06:35,450 --> 00:06:38,122
+Figura b: dos bombillas en paralelo.
+
+80
+00:06:38,162 --> 00:06:41,210
+Cada una recibe el voltaje completo de la
+
+81
+00:06:41,250 --> 00:06:47,161
+batería, de forma independiente, así que
+brillan con su máxima intensidad y por
+
+82
+00:06:47,201 --> 00:06:51,154
+igual. Si una se desconecta, la otra sigue
+encendida.
+
+83
+00:06:52,083 --> 00:06:56,611
+Figura c: L1 en serie con el bloque en
+paralelo de L2 y L3.
+
+84
+00:06:56,651 --> 00:07:02,341
+Ese bloque tiene la mitad de la
+resistencia de una bombilla, así que L1 se
+
+85
+00:07:02,381 --> 00:07:05,438
+queda con dos tercios del voltaje y L2 y
+
+86
+00:07:05,478 --> 00:07:08,690
+L3 con un tercio. Por eso L1 brilla más, y
+
+87
+00:07:08,730 --> 00:07:12,251
+disipa cuatro veces la potencia de L2 o de
+L3.
+
+88
+00:07:13,183 --> 00:07:17,851
+En conclusión, se validaron la ley de Ohm
+y las leyes de Kirchhoff.
+
+89
+00:07:17,891 --> 00:07:23,262
+La resistencia equivalente en serie fue
+unas 9,5 veces mayor que en paralelo.
+
+90
+00:07:23,302 --> 00:07:28,955
+Las medidas con el óhmetro coincidieron
+con la teoría con errores menores al 1 %.
+
+91
+00:07:28,995 --> 00:07:31,836
+Y la forma de conectar el circuito define
+
+92
+00:07:31,876 --> 00:07:34,787
+el voltaje y la potencia de cada elemento:
+
+93
+00:07:34,827 --> 00:07:37,528
+con los mismos 10 V, el paralelo disipa
+
+94
+00:07:37,568 --> 00:07:40,479
+casi diez veces más potencia que la serie.

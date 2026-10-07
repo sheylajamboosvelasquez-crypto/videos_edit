@@ -9,3 +9,4 @@ salida/trabajo/voz/
 salida/trabajo/previa/
 salida/trabajo/*.log
 __pycache__/
+salida/trabajo/lista_*.txt
