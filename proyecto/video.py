@@ -131,9 +131,15 @@ open(srtp, "w").write("\n".join(srt))
 
 # ---- 3c. unión + subtítulos quemados + audio ----
 final = os.path.join(RAIZ, "salida", f"lab4_ley_de_ohm_{VER}.mp4")
-style = "FontName=Inter,FontSize=17,PrimaryColour=&H00FFFFFF&,OutlineColour=&H00101010&,BackColour=&H80000000&,BorderStyle=1,Outline=1.6,Shadow=0.6,Alignment=2,MarginV=26"
-run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", os.path.join(TRAB, "lista_video.txt"), "-i", voz,
-     "-filter_complex", f"[0:v]subtitles={srtp}:force_style='{style}'[v]", "-map", "[v]", "-map", "1:a",
+style = "FontName=Inter,FontSize=16,PrimaryColour=&H00FFFFFF&,OutlineColour=&H50000000&,BackColour=&H50000000&,BorderStyle=3,Outline=0.8,Shadow=0,Alignment=2,MarginV=22"
+# concat por filtro (no demuxer): las tarjetas de Remotion y los clips de ffmpeg tienen
+# distinto formato de color y base de tiempo, así que se normalizan antes de unir
+ins = [x for p in lista for x in ("-i", p)]
+n = len(lista)
+norm = ";".join(f"[{i}:v]format=yuv420p,setsar=1,fps=30,settb=1/30,setpts=PTS-STARTPTS[s{i}]" for i in range(n))
+fc = norm + ";" + "".join(f"[s{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0,subtitles={srtp}:force_style='{style}'[v]"
+run(["ffmpeg", "-v", "error", "-y", *ins, "-i", voz,
+     "-filter_complex", fc, "-map", "[v]", "-map", f"{n}:a",
      "-c:v", "libx264", "-crf", "19", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", "30",
      "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "-shortest", final])
 open(os.path.join(TRAB, f"comandos_{VER}.txt"), "w").write("\n\n".join(CMDS))

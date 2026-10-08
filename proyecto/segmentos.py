@@ -77,7 +77,7 @@ SEGMENTOS = [
             "todas con cinco por ciento de tolerancia. Las medimos con el óhmetro, siempre sin energía.",
         sub="Primero identificamos cada resistencia. R1 y R2 son de 330 Ω y R3 de 560 Ω, todas con 5 % de tolerancia. Las medimos con el óhmetro, siempre sin energía."),
     dict(id="b4b", visual=dict(kind="footage", clips=[
-            dict(r=(147.2, 151.5, "h"), label="Armado del circuito en la placa", cue="Luego armamos"),
+            dict(r=(392.0, 400.5, "v"), label="Circuito en serie: R1, R2 y R3 una tras otra", cue="Luego armamos"),
             dict(r=(164.0, 171.5, "h"), label="Cable rojo al mayor potencial, negro al menor", cue="con el cable rojo"),
             dict(r=(171.6, 173.8, "h"), label="Equivalente con la fuente desconectada", cue="Con la fuente"),
             dict(r=(122.0, 134.0, "v"), label="Medición en cada resistencia", cue="Después energizamos"),
@@ -90,7 +90,7 @@ SEGMENTOS = [
             "Después energizamos con 10 V, medimos el voltaje en cada resistencia con el sensor de la interfaz, en paralelo, "
             "y la corriente del lazo con el multímetro como amperímetro, en serie."),
     dict(id="b4c", visual=dict(kind="footage", clips=[
-            dict(r=(392.0, 400.5, "v"), label="Montaje de las resistencias en la placa", cue="Después conectamos"),
+            dict(r=(158.5, 161.8, "h"), label="Conexión de las resistencias en la placa", cue="Después conectamos"),
             dict(r=(225.0, 237.0, "v"), label="Equivalente sin energía", cue="Medimos la resistencia"),
             dict(r=(237.0, 252.0, "v"), label="Voltaje y corriente con la fuente encendida", cue="y con la fuente"),
             dict(r=(72.0, 76.0, "h"), label="Registro de los datos", cue="y la total")]),
