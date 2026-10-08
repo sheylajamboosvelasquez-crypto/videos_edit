@@ -7,9 +7,10 @@ Uso: video.py VERSION   (por ejemplo: video.py v1)"""
 import json, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from segmentos import SEGMENTOS
+from segmentos import SEGMENTOS, FONDO, FONDO_FIJO
 
 VER = sys.argv[1] if len(sys.argv) > 1 else "v1"
+MODO_FONDO = "fondo" in sys.argv[2:]  # v2: grupo de fondo y tarjetas en recuadro
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TRAB = os.path.join(RAIZ, "salida", "trabajo")
 SEG = os.path.join(TRAB, "seg")
@@ -71,17 +72,99 @@ def slide(s, out):
          "--chrome-mode=chrome-for-testing", "--codec=h264", "--crf=18", "--muted", "--log=error"], cwd=REM)
 
 
+# ---- v2: fondo continuo con el video del grupo ----
+LENTO = 1.2  # cámara lenta suave del fondo
+SEGF = os.path.join(TRAB, "seg_fondo")
+_pos = [0, 0.0]  # índice del rango y avance dentro de él (s de fuente)
+
+
+def tomar(d):
+    """Toma `d` segundos de salida del rollo FONDO (a velocidad 1/LENTO), en orden y dando la vuelta."""
+    piezas, falta = [], d / LENTO
+    while falta > 0.01:
+        a, b, o = FONDO[_pos[0]]
+        ini = a + _pos[1]
+        resto = b - ini
+        if resto < 1.0:
+            _pos[0] = (_pos[0] + 1) % len(FONDO); _pos[1] = 0.0
+            continue
+        n = min(resto, falta)
+        if 0 < falta - n < 0.6:  # no dejar un pedacito suelto al final
+            n = falta
+        n = min(n, resto)
+        piezas.append((ini, n, o))
+        falta -= n
+        _pos[1] += n
+    return piezas
+
+
+def capa_fondo(i, ss, n, o, speed):
+    c = f"[{i}:v]setpts=(PTS-STARTPTS)*{speed:.4f},"
+    if o == "v":
+        c += (f"crop=604:1080:658:0,deshake=rx=32:ry=32,split[f{i}][g{i}];"
+              f"[g{i}]scale=1920:-2,crop=1920:1080,boxblur=30:3,eq=brightness=-0.22[bg{i}];"
+              f"[f{i}]scale=-2:1080[fg{i}];[bg{i}][fg{i}]overlay=30:0,")
+    else:
+        c += "deshake=rx=32:ry=32,crop=1840:1035,scale=1920:1080,"
+    return c + f"fps=30,format=yuv420p,setsar=1[q{i}]"
+
+
+def con_fondo(s, t, out):
+    dur = t["dur"]
+    props = json.load(open(os.path.join(TRAB, "props", f"{s['id']}.json")))
+    props["panel"] = True
+    pp = os.path.join(SEGF, f"{s['id']}_panel.json")
+    json.dump(props, open(pp, "w"), ensure_ascii=False)
+    mov = os.path.join(SEGF, f"{s['id']}_panel.mov")
+    if not os.path.exists(mov):
+        run(["npx", "remotion", "render", "src/index.ts", "Slide", mov, f"--props={pp}", f"--browser-executable={CH}",
+             "--chrome-mode=chrome-for-testing", "--codec=prores", "--prores-profile=4444", "--pixel-format=yuva444p10le",
+             "--image-format=png", "--muted", "--log=error"], cwd=REM)
+    if s["id"] in FONDO_FIJO:
+        a, b, o = FONDO_FIJO[s["id"]][0]
+        piezas, speed = [(a, b - a, o)], max(1.0, dur / (b - a))
+    else:
+        piezas, speed = tomar(dur), LENTO
+    ins, capas = [], []
+    for i, (ss, n, o) in enumerate(piezas):
+        ins += ["-ss", f"{ss:.3f}", "-t", f"{n:.3f}", "-i", CRUDO]
+        capas.append(capa_fondo(i, ss, n, o, speed))
+    k = len(piezas)
+    fc = (";".join(capas) + ";" + "".join(f"[q{i}]" for i in range(k)) + f"concat=n={k}:v=1:a=0,"
+          f"tpad=stop_mode=clone:stop_duration={dur:.3f},trim=duration={dur:.3f},setpts=PTS-STARTPTS[fondo];"
+          f"[{k}:v]scale=1220:686,format=yuva420p,setpts=PTS-STARTPTS[pn];"
+          f"[fondo][pn]overlay=664:110:format=auto,format=yuv420p,setsar=1[v]")
+    run(["ffmpeg", "-v", "warning", "-y", *ins, "-i", mov, "-filter_complex", fc, "-map", "[v]", "-t", f"{dur}",
+         "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", "30", "-an", out])
+
+
 # ---- 1-2. segmentos de video ----
 SOLO = os.environ.get("SOLO")
 if SOLO:
     s = next(x for x in SEGMENTOS if x["id"] == SOLO)
-    out = os.path.join(SEG, f"{SOLO}.mp4")
-    footage(s, T[SOLO], out) if s["visual"]["kind"] == "footage" else slide(s, out)
+    if MODO_FONDO and s["visual"]["kind"] != "footage":
+        os.makedirs(SEGF, exist_ok=True)
+        for x in SEGMENTOS:  # avanzar el rollo hasta este segmento
+            if x["id"] == SOLO:
+                break
+            if x["visual"]["kind"] != "footage" and x["id"] not in FONDO_FIJO:
+                tomar(T[x["id"]]["dur"])
+        con_fondo(s, T[SOLO], os.path.join(SEGF, f"{SOLO}.mp4"))
+    else:
+        out = os.path.join(SEG, f"{SOLO}.mp4")
+        footage(s, T[SOLO], out) if s["visual"]["kind"] == "footage" else slide(s, out)
     sys.exit(0)
 lista = []
 for s in SEGMENTOS:
     out = os.path.join(SEG, f"{s['id']}.mp4")
-    if not os.path.exists(out):
+    if MODO_FONDO and s["visual"]["kind"] != "footage":
+        os.makedirs(SEGF, exist_ok=True)
+        out = os.path.join(SEGF, f"{s['id']}.mp4")
+        if not os.path.exists(out):
+            con_fondo(s, T[s["id"]], out)
+        else:
+            tomar(T[s["id"]]["dur"]) if s["id"] not in FONDO_FIJO else None  # mantener el avance del rollo
+    elif not os.path.exists(out):
         (footage(s, T[s["id"]], out) if s["visual"]["kind"] == "footage" else slide(s, out))
     lista.append(out)
     print("listo", s["id"])

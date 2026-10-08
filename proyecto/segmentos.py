@@ -202,3 +202,19 @@ SEGMENTOS = [
     dict(id="b10", silent=4.0, visual=dict(kind="title", bg="img/grupo.jpg", title="Gracias", kicker="Experiencia N.º 4 · Circuitos resistivos y ley de Ohm",
         members=MIEMBROS, footer="Física de campos · Grupo 26253 · Universidad de la Costa (CUC)"), say=""),
 ]
+
+# ---------------- v2: video del grupo de fondo ----------------
+# Planos útiles del crudo, en orden (inicio, fin, orientación). Se excluyen planos
+# borrosos, de bata o piso, y los momentos con la persona que parece la docente
+# (≈3:16-3:26, 4:49-4:52, 5:45-5:50).
+FONDO = [
+    (0.0, 3.8, "v"), (4.2, 7.8, "h"), (8.2, 34.0, "v"), (36.5, 48.4, "v"),
+    (49.2, 69.0, "h"), (71.0, 79.0, "h"), (81.5, 86.4, "h"),
+    (86.6, 99.0, "v"), (103.0, 111.5, "v"), (113.5, 136.5, "v"), (138.5, 146.4, "v"),
+    (147.1, 173.8, "h"),
+    (174.1, 196.0, "v"), (206.0, 241.0, "v"), (243.5, 256.5, "v"), (264.0, 276.5, "v"),
+    (279.0, 281.5, "v"), (283.5, 289.0, "v"), (292.0, 299.0, "v"), (311.5, 321.5, "v"),
+    (324.0, 331.5, "v"), (334.0, 345.0, "v"), (350.0, 358.0, "v"), (362.0, 369.0, "v"),
+    (371.5, 386.0, "v"), (389.0, 400.5, "v"),
+]
+FONDO_FIJO = {"b10": [(0.0, 3.8, "v")]}  # cierre: la foto del grupo

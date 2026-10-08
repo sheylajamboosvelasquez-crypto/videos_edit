@@ -12,7 +12,8 @@ const C = {
 const FONT = 'Inter, "DejaVu Sans", sans-serif';
 
 type Cues = Record<string, number>;
-type Props = {visual: any; dur: number; cues: Cues};
+type Props = {visual: any; dur: number; cues: Cues; panel?: boolean};
+const PanelCtx = React.createContext(false);
 
 const useT = () => {
 	const f = useCurrentFrame();
@@ -32,9 +33,12 @@ const Frame: React.FC<{heading?: string; bg?: string; children: React.ReactNode;
 	const t = useT();
 	const head = useIn(0.05, 0.6);
 	const fadeOut = interpolate(t, [dur - 0.35, dur], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+	const panel = React.useContext(PanelCtx);
 	return (
-		<AbsoluteFill style={{background: `radial-gradient(ellipse at 20% 0%, ${C.bg2} 0%, ${C.bg} 65%)`, fontFamily: FONT, color: C.white, opacity: fadeOut}}>
-			{bg ? (
+		<AbsoluteFill style={{background: panel ? 'transparent' : `radial-gradient(ellipse at 20% 0%, ${C.bg2} 0%, ${C.bg} 65%)`, fontFamily: FONT, color: C.white}}>
+			{panel ? <Box /> : null}
+			<AbsoluteFill style={{opacity: fadeOut}}>
+			{bg && !panel ? (
 				<AbsoluteFill>
 					<Img src={staticFile(bg)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(22px) brightness(0.35)', transform: 'scale(1.1)'}} />
 				</AbsoluteFill>
@@ -49,10 +53,16 @@ const Frame: React.FC<{heading?: string; bg?: string; children: React.ReactNode;
 					<div style={{fontSize: 56, fontWeight: 700, letterSpacing: -0.5}}>{heading}</div>
 				</div>
 			) : null}
-			<div style={{position: 'absolute', left: 96, right: 96, top: 210, bottom: 150}}>{children}</div>
+			<div style={{position: 'absolute', left: 96, right: 96, top: 210, bottom: panel ? 70 : 150}}>{children}</div>
+			</AbsoluteFill>
 		</AbsoluteFill>
 	);
 };
+// recuadro del modo panel (se escala a 1220x686 sobre el video del grupo)
+const Box: React.FC = () => (
+	<AbsoluteFill style={{background: 'rgba(13,21,36,0.86)', borderRadius: 44, border: '3px solid rgba(255,255,255,0.16)',
+		boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.3)'}} />
+);
 
 const Appear: React.FC<{at: number; children: React.ReactNode; style?: React.CSSProperties; dy?: number}> = ({at, children, style, dy = 24}) => {
 	const p = useIn(at);
@@ -65,6 +75,25 @@ const Title: React.FC<Props> = ({visual: v, dur}) => {
 	const a = useIn(0.2, 0.8), b = useIn(0.7, 0.8), c = useIn(1.3, 0.8);
 	const fadeOut = interpolate(t, [dur - 0.35, dur], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 	const zoom = interpolate(t, [0, dur], [1.08, 1.18]);
+	const panel = React.useContext(PanelCtx);
+	if (panel) {
+		return (
+			<AbsoluteFill style={{fontFamily: FONT, color: C.white}}>
+				<Box />
+				<AbsoluteFill style={{opacity: fadeOut}}>
+					<div style={{position: 'absolute', left: 110, top: 120, right: 110}}>
+						<div style={{fontSize: 40, color: C.redSoft, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', opacity: a}}>{v.kicker}</div>
+						<div style={{fontSize: 128, fontWeight: 800, lineHeight: 1.02, marginTop: 20, letterSpacing: -2, opacity: a, transform: `translateY(${(1 - a) * 30}px)`}}>{v.title}</div>
+						<div style={{width: 200, height: 10, background: C.red, borderRadius: 5, marginTop: 40, transform: `scaleX(${b})`, transformOrigin: 'left'}} />
+						<div style={{marginTop: 40, fontSize: 44, lineHeight: 1.45, opacity: c, columnCount: 2, columnGap: 60}}>
+							{v.members.map((m: string) => <div key={m}>{m}</div>)}
+						</div>
+						<div style={{marginTop: 34, fontSize: 30, color: C.muted, opacity: c}}>{v.footer}</div>
+					</div>
+				</AbsoluteFill>
+			</AbsoluteFill>
+		);
+	}
 	return (
 		<AbsoluteFill style={{background: C.bg, fontFamily: FONT, color: C.white, opacity: fadeOut}}>
 			<AbsoluteFill>
@@ -368,7 +397,7 @@ const Bulbs: React.FC<Props> = ({visual: v, dur, cues}) => {
 const KINDS: Record<string, React.FC<Props>> = {title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
 const Slide: React.FC<Props> = (p) => {
 	const K = KINDS[p.visual.kind];
-	return <K {...p} />;
+	return <PanelCtx.Provider value={!!p.panel}><K {...p} /></PanelCtx.Provider>;
 };
 
 export const Root: React.FC = () => (

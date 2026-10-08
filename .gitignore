@@ -10,3 +10,5 @@ salida/trabajo/previa/
 salida/trabajo/*.log
 __pycache__/
 salida/trabajo/lista_*.txt
+salida/trabajo/seg_fondo/
+salida/trabajo/stats.txt
