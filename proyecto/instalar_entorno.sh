@@ -18,4 +18,8 @@ mkdir -p ~/.claude/skills && cp -r "$(dirname "$0")/../.claude/skills/lab-fisica
 uv venv ~/.venvs/voz --python 3.12
 uv pip install --python ~/.venvs/voz/bin/python --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple "torch==2.8.0" "torchaudio==2.8.0" "transformers>=4.57,<4.58"
 uv pip install --python ~/.venvs/voz/bin/python coqui-tts soundfile six
+# motor alternativo Chatterbox (con marca de agua Perth)
+uv venv ~/.venvs/chatter --python 3.11
+uv pip install --python ~/.venvs/chatter/bin/python --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple "torch==2.6.0" "torchaudio==2.6.0"
+uv pip install --python ~/.venvs/chatter/bin/python chatterbox-tts "setuptools<81"
 echo "Listo. Abre una sesión nueva de Claude Code para que cargue los skills."

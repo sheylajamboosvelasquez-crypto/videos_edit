@@ -3,7 +3,7 @@ name: voz-clonada
 description: Narrar con la voz clonada del usuario (XTTS-v2, local, sin pago). Úsalo cuando el usuario pida que el video o la narración salga con su propia voz, clonar su voz a partir de una grabación, o rehacer un audio con su voz en lugar de una voz de IA genérica.
 ---
 
-# Voz clonada del usuario (XTTS-v2)
+# Voz clonada del usuario (XTTS-v2 o Chatterbox)
 
 Clona la voz del usuario a partir de una grabación suya de 1 a 3 minutos y genera la narración con esa voz.
 Funciona sin internet una vez descargado el modelo y sin tarjeta gráfica (más lento en CPU).
@@ -39,6 +39,23 @@ COQUI_TOS_AGREED=1 $V -I $SK/tts_clon.py "Frase de prueba con números: diez vol
 COQUI_TOS_AGREED=1 $V -I $SK/tts_clon.py --lote tramos.json      # [{"texto": "...", "salida": "...wav"}, ...]
 ```
 Opciones: `--vel 1.05` (un poco más rápido), `--temp 0.5` (más estable, menos expresiva).
+
+## Motor alternativo: Chatterbox Multilingual (MIT, más expresivo)
+Pone una marca de agua inaudible (Perth) en todo audio generado: **no se desactiva nunca**.
+```bash
+uv venv ~/.venvs/chatter --python 3.11
+uv pip install --python ~/.venvs/chatter/bin/python --index-url https://download.pytorch.org/whl/cpu \
+  --extra-index-url https://pypi.org/simple "torch==2.6.0" "torchaudio==2.6.0"
+uv pip install --python ~/.venvs/chatter/bin/python chatterbox-tts "setuptools<81"
+# referencia: un trozo continuo de 10-20 s del usuario hablando natural -> ~/.local/share/voz-usuario/ref_chatter.wav
+~/.venvs/chatter/bin/python -I $SK/tts_chatter.py "texto" salida.wav --expr 0.6   # 0.5 normal, 0.7 más animado
+```
+Más lento que XTTS en CPU (~6 s de proceso por segundo de audio).
+
+## Si suena robótica o monótona
+1. Unir varias grabaciones: `preparar_voz.py grab1.ogg grab2.ogg` (más variedad de entonación).
+2. XTTS: subir `--temp` (0.8-0.85). Chatterbox: subir `--expr` (0.6-0.75).
+3. Escribir el guion con puntuación natural (comas, preguntas, exclamaciones): la entonación sale de ahí.
 
 ## Integración con lab-fisica-narrado
 `proyecto/audio.py` usa la voz clonada con `VOZ=clon`:
