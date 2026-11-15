@@ -12,6 +12,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("texto", nargs="?"); ap.add_argument("salida", nargs="?"); ap.add_argument("--lote")
 ap.add_argument("--ref", default="~/.local/share/voz-usuario/ref_chatter.wav")
 ap.add_argument("--expr", type=float, default=0.6); ap.add_argument("--cfg", type=float, default=0.4)
+ap.add_argument("--temp", type=float, default=0.8, help="variedad de la generación (0.8 normal, 1.0 más variada)")
 ap.add_argument("--verificar", action="store_true", help="transcribe cada frase con Whisper y regenera si no coincide (hasta 3 intentos)")
 a = ap.parse_args()
 # ajustes que encontró buscar_parecido.py (si existen) mandan sobre los valores por defecto
@@ -57,7 +58,7 @@ def puntaje(wav, texto):
 def generar(f):
     mejor = None
     for intento in range(3 if rec else 1):
-        w = m.generate(f, language_id="es", audio_prompt_path=ref, exaggeration=a.expr, cfg_weight=a.cfg)
+        w = m.generate(f, language_id="es", audio_prompt_path=ref, exaggeration=a.expr, cfg_weight=a.cfg, temperature=a.temp)
         if not rec:
             return w
         sc, oido = puntaje(w, f)
