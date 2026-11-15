@@ -394,7 +394,33 @@ const Bulbs: React.FC<Props> = ({visual: v, dur, cues}) => {
 	);
 };
 
-const KINDS: Record<string, React.FC<Props>> = {title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
+// ---------- figura (gráfica del informe) con pie y viñetas opcionales ----------
+const Figure: React.FC<Props> = ({visual: v, dur, cues}) => {
+	const panel = React.useContext(PanelCtx);
+	const facts = (v.facts || []) as any[];
+	return (
+		<Frame heading={v.heading} dur={dur}>
+			<div style={{display: 'flex', gap: 40, alignItems: 'flex-start', height: '100%'}}>
+				<Appear at={0.3} style={{flex: facts.length ? 1.6 : 1, background: C.card, borderRadius: 18, padding: 16,
+					boxShadow: '0 10px 30px rgba(0,0,0,0.35)', maxHeight: panel ? 560 : 640, display: 'flex', flexDirection: 'column'}}>
+					<Img src={staticFile(v.src)} style={{width: '100%', maxHeight: panel ? 470 : 560, objectFit: 'contain', display: 'block'}} />
+					{v.caption ? <div style={{color: C.ink, fontSize: 24, marginTop: 10, textAlign: 'center'}}>{v.caption}</div> : null}
+				</Appear>
+				{facts.length ? (
+					<div style={{flex: 1, paddingTop: 10}}>
+						{facts.map((f: any, i: number) => (
+							<Appear key={i} at={cueAt(cues, f.cue, 1 + i)} style={{fontSize: 32, lineHeight: 1.3, marginBottom: 24, display: 'flex', gap: 16}}>
+								<span style={{color: C.redSoft, fontWeight: 800}}>▸</span><span>{f.text}</span>
+							</Appear>
+						))}
+					</div>
+				) : null}
+			</div>
+		</Frame>
+	);
+};
+
+const KINDS: Record<string, React.FC<Props>> = {figure: Figure, title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
 const Slide: React.FC<Props> = (p) => {
 	const K = KINDS[p.visual.kind];
 	return <PanelCtx.Provider value={!!p.panel}><K {...p} /></PanelCtx.Provider>;
