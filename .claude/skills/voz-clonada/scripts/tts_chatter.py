@@ -12,6 +12,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("texto", nargs="?"); ap.add_argument("salida", nargs="?"); ap.add_argument("--lote")
 ap.add_argument("--ref", default="~/.local/share/voz-usuario/ref_chatter.wav")
 ap.add_argument("--expr", type=float, default=0.6); ap.add_argument("--cfg", type=float, default=0.4)
+ap.add_argument("--verificar", action="store_true", help="transcribe cada frase con Whisper y regenera si no coincide (hasta 3 intentos)")
 a = ap.parse_args()
 # ajustes que encontró buscar_parecido.py (si existen) mandan sobre los valores por defecto
 _aj = os.path.expanduser("~/.local/share/voz-usuario/ajustes_chatter.json")
@@ -25,7 +26,7 @@ print(f"modelo cargado en {time.time() - t0:.0f} s", flush=True)
 ref = os.path.expanduser(a.ref)
 
 
-def frases(t, maxc=220):
+def frases(t, maxc=140):
     partes, cur = [], ""
     for f in re.split(r"(?<=[.!?¿¡;:])\s+", t.strip()):
         if cur and len(cur) + len(f) > maxc:
@@ -35,11 +36,43 @@ def frases(t, maxc=220):
     return partes + ([cur] if cur else [])
 
 
+# --- verificación con Whisper base (sherpa-onnx, local): compara lo dicho con lo pedido ---
+import difflib, unicodedata
+rec = None
+if a.verificar:
+    import numpy as np, sherpa_onnx
+    M = os.path.expanduser("~/.local/share/whisper-models/sherpa-onnx-whisper-base")
+    rec = sherpa_onnx.OfflineRecognizer.from_whisper(encoder=f"{M}/base-encoder.int8.onnx", decoder=f"{M}/base-decoder.int8.onnx",
+                                                     tokens=f"{M}/base-tokens.txt", language="es", task="transcribe", num_threads=2)
+
+def norm(t):
+    t = unicodedata.normalize("NFD", t.lower()); t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    return re.sub(r"[^a-z0-9ñ ]+", " ", t).split()
+
+def puntaje(wav, texto):
+    x = torchaudio.functional.resample(wav, m.sr, 16000)[0].numpy().astype("float32")
+    st = rec.create_stream(); st.accept_waveform(16000, x); rec.decode_stream(st)
+    return difflib.SequenceMatcher(None, norm(texto), norm(st.result.text)).ratio(), st.result.text
+
+def generar(f):
+    mejor = None
+    for intento in range(3 if rec else 1):
+        w = m.generate(f, language_id="es", audio_prompt_path=ref, exaggeration=a.expr, cfg_weight=a.cfg)
+        if not rec:
+            return w
+        sc, oido = puntaje(w, f)
+        if mejor is None or sc > mejor[0]:
+            mejor = (sc, w)
+        if sc >= 0.78:
+            break
+        print(f"   reintento {intento + 1}: coincidencia {sc:.2f} -> «{oido.strip()}»", flush=True)
+    return mejor[1]
+
 trabajos = json.load(open(a.lote)) if a.lote else [{"texto": a.texto, "salida": a.salida}]
 for t in trabajos:
     t1, trozos = time.time(), []
     for f in frases(t["texto"]):
-        w = m.generate(f, language_id="es", audio_prompt_path=ref, exaggeration=a.expr, cfg_weight=a.cfg)
+        w = generar(f)
         trozos += [w, torch.zeros(1, int(m.sr * 0.18))]  # pausa breve entre frases
     torchaudio.save(t["salida"], torch.cat(trozos[:-1], dim=1), m.sr)
     print(f"listo {t['salida']} ({time.time() - t1:.0f} s)", flush=True)

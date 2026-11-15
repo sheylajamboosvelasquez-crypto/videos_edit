@@ -52,6 +52,17 @@ uv pip install --python ~/.venvs/chatter/bin/python chatterbox-tts "setuptools<8
 ```
 Más lento que XTTS en CPU (~6 s de proceso por segundo de audio).
 
+## Parecido y verificación (Chatterbox)
+```bash
+# busca entre tus grabaciones la referencia de 10 s y los ajustes (expr, cfg) que más se parecen a tu voz real;
+# deja ref_chatter.wav y ajustes_chatter.json en ~/.local/share/voz-usuario (tts_chatter.py los usa solos)
+~/.venvs/chatter/bin/python -I $SK/buscar_parecido.py
+# --verificar: transcribe cada frase con Whisper y regenera las que no coinciden (hasta 3 intentos). Úsalo siempre para el video.
+~/.venvs/chatter/bin/python -I $SK/tts_chatter.py --lote tramos.json --verificar
+```
+El parecido se mide con la huella de voz del modelo (1,0 = idéntica). Techo con las grabaciones actuales: 0,958
+(tus dos grabaciones entre sí); una grabación con la grabadora del celular, sin compresión de WhatsApp, sube ese techo.
+
 ## Si suena robótica o monótona
 1. Unir varias grabaciones: `preparar_voz.py grab1.ogg grab2.ogg` (más variedad de entonación).
 2. XTTS: subir `--temp` (0.8-0.85). Chatterbox: subir `--expr` (0.6-0.75).
