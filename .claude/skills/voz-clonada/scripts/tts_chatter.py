@@ -13,6 +13,10 @@ ap.add_argument("texto", nargs="?"); ap.add_argument("salida", nargs="?"); ap.ad
 ap.add_argument("--ref", default="~/.local/share/voz-usuario/ref_chatter.wav")
 ap.add_argument("--expr", type=float, default=0.6); ap.add_argument("--cfg", type=float, default=0.4)
 a = ap.parse_args()
+# ajustes que encontró buscar_parecido.py (si existen) mandan sobre los valores por defecto
+_aj = os.path.expanduser("~/.local/share/voz-usuario/ajustes_chatter.json")
+if os.path.exists(_aj) and "--expr" not in os.sys.argv and "--cfg" not in os.sys.argv:
+    _j = json.load(open(_aj)); a.expr, a.cfg = _j["expr"], _j["cfg"]
 torch.set_num_threads(os.cpu_count() or 4)
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 t0 = time.time()
