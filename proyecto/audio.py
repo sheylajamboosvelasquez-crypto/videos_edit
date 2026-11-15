@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Paso 3-4 del skill: genera la voz de cada segmento con edge-tts (Salomé),
+"""Paso 3-4 del skill: genera la voz de cada segmento con edge-tts (Salomé) o,
+con VOZ=clon, con la voz clonada del usuario (skill voz-clonada, XTTS-v2);
 mide su duración y escribe salida/trabajo/tiempos.json con los tiempos de cada
 segmento y de cada `cue` (para animaciones y cortes de clips)."""
 import json, os, subprocess, sys
@@ -14,6 +15,17 @@ TTS = os.path.expanduser("~/.claude/skills/lab-fisica-narrado/scripts/tts_edge.p
 PY = os.path.expanduser("~/.venvs/lab-fisica/bin/python")
 LEAD, TAIL, FPS = 0.35, 0.55, 30
 os.makedirs(VOZ, exist_ok=True)
+CLON = os.environ.get("VOZ") == "clon"
+EXT = "_clon.wav" if CLON else ".mp3"
+
+if CLON:  # todos los tramos de una vez: el modelo se carga una sola vez
+    pend = [dict(texto=s["say"], salida=os.path.join(VOZ, s["id"] + EXT))
+            for s in SEGMENTOS if not s.get("silent") and not os.path.exists(os.path.join(VOZ, s["id"] + EXT))]
+    if pend:
+        lote = os.path.join(VOZ, "lote_clon.json")
+        json.dump(pend, open(lote, "w"), ensure_ascii=False)
+        subprocess.run([os.path.expanduser("~/.venvs/voz/bin/python"), "-I",
+                        os.path.join(RAIZ, ".claude/skills/voz-clonada/scripts/tts_clon.py"), "--lote", lote], check=True)
 
 
 def dur(p):
@@ -36,7 +48,7 @@ for s in SEGMENTOS:
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono", "-t", str(s["silent"]), wav], check=True)
         total = s["silent"]
     else:
-        mp3 = os.path.join(VOZ, f"{s['id']}.mp3")
+        mp3 = os.path.join(VOZ, f"{s['id']}{EXT}")
         if not os.path.exists(mp3):
             subprocess.run([PY, "-I", TTS, s["say"], mp3], check=True)
         a = dur(mp3)
