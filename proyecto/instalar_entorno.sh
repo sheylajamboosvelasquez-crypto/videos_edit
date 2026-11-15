@@ -16,6 +16,6 @@ mkdir -p ~/.claude/skills && cp -r "$(dirname "$0")/../.claude/skills/lab-fisica
 (cd "$(dirname "$0")/remotion" && npm install --no-audit --no-fund)
 # voz clonada (skill voz-clonada): entorno aparte con PyTorch CPU y coqui-tts (XTTS-v2)
 uv venv ~/.venvs/voz --python 3.12
-uv pip install --python ~/.venvs/voz/bin/python --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple "torch==2.5.1" "torchaudio==2.5.1"
-uv pip install --python ~/.venvs/voz/bin/python coqui-tts soundfile
+uv pip install --python ~/.venvs/voz/bin/python --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple "torch==2.8.0" "torchaudio==2.8.0" "transformers>=4.57,<4.58"
+uv pip install --python ~/.venvs/voz/bin/python coqui-tts soundfile six
 echo "Listo. Abre una sesión nueva de Claude Code para que cargue los skills."

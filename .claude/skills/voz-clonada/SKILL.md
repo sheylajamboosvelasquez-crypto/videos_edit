@@ -23,8 +23,8 @@ Funciona sin internet una vez descargado el modelo y sin tarjeta gráfica (más 
 ```bash
 uv venv ~/.venvs/voz --python 3.12
 uv pip install --python ~/.venvs/voz/bin/python --index-url https://download.pytorch.org/whl/cpu \
-  --extra-index-url https://pypi.org/simple "torch==2.5.1" "torchaudio==2.5.1"
-uv pip install --python ~/.venvs/voz/bin/python coqui-tts soundfile
+  --extra-index-url https://pypi.org/simple "torch==2.8.0" "torchaudio==2.8.0" "transformers>=4.57,<4.58"
+uv pip install --python ~/.venvs/voz/bin/python coqui-tts soundfile six
 ```
 Requiere acceso a `huggingface.co` (descarga del modelo, ~1,9 GB la primera vez).
 
@@ -46,6 +46,11 @@ Opciones: `--vel 1.05` (un poco más rápido), `--temp 0.5` (más estable, menos
 VOZ=clon COQUI_TOS_AGREED=1 ~/.venvs/lab-fisica/bin/python -I proyecto/audio.py
 ```
 El resto del flujo (tiempos, tarjetas, subtítulos, armado) no cambia.
+
+## Pronunciación
+- Escribir los números en palabras (como en lab-fisica-narrado).
+- XTTS puede leer «Ohm» a la inglesa: si suena raro, escribir «Om» en el texto narrado (el subtítulo sigue diciendo Ohm).
+- Velocidad en CPU: ~2 s de proceso por cada segundo de audio (8 min de narración ≈ 15-20 min).
 
 ## Consejos para la grabación del usuario
 - 1 a 3 minutos, habitación callada, celular a 15-20 cm, tono natural (como va a sonar el video).
