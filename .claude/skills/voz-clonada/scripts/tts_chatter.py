@@ -13,12 +13,16 @@ ap.add_argument("texto", nargs="?"); ap.add_argument("salida", nargs="?"); ap.ad
 ap.add_argument("--ref", default="~/.local/share/voz-usuario/ref_chatter.wav")
 ap.add_argument("--expr", type=float, default=0.6); ap.add_argument("--cfg", type=float, default=0.4)
 ap.add_argument("--temp", type=float, default=0.8, help="variedad de la generación (0.8 normal, 1.0 más variada)")
+ap.add_argument("--dulce", action="store_true", help="acabado suave: +calidez en 250 Hz, -3 dB en agudos y 4 %% más pausado")
 ap.add_argument("--verificar", action="store_true", help="transcribe cada frase con Whisper y regenera si no coincide (hasta 3 intentos)")
 a = ap.parse_args()
 # ajustes que encontró buscar_parecido.py (si existen) mandan sobre los valores por defecto
 _aj = os.path.expanduser("~/.local/share/voz-usuario/ajustes_chatter.json")
 if os.path.exists(_aj) and "--expr" not in os.sys.argv and "--cfg" not in os.sys.argv:
     _j = json.load(open(_aj)); a.expr, a.cfg = _j["expr"], _j["cfg"]
+    if "temp" in _j and "--temp" not in os.sys.argv: a.temp = _j["temp"]
+    if "ref" in _j and "--ref" not in os.sys.argv: a.ref = os.path.join(os.path.dirname(_aj), _j["ref"])
+    if _j.get("dulce"): a.dulce = True
 torch.set_num_threads(os.cpu_count() or 4)
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 t0 = time.time()
@@ -76,4 +80,10 @@ for t in trabajos:
         w = generar(f)
         trozos += [w, torch.zeros(1, int(m.sr * 0.18))]  # pausa breve entre frases
     torchaudio.save(t["salida"], torch.cat(trozos[:-1], dim=1), m.sr)
+    if a.dulce:
+        import subprocess
+        tmp = t["salida"] + ".tmp.wav"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", t["salida"], "-af",
+                        "atempo=0.96,equalizer=f=250:t=q:w=1.2:g=2,highshelf=f=5500:g=-3", tmp], check=True)
+        os.replace(tmp, t["salida"])
     print(f"listo {t['salida']} ({time.time() - t1:.0f} s)", flush=True)

@@ -63,6 +63,10 @@ Más lento que XTTS en CPU (~6 s de proceso por segundo de audio).
 El parecido se mide con la huella de voz del modelo (1,0 = idéntica). Techo con las grabaciones actuales: 0,958
 (tus dos grabaciones entre sí); una grabación con la grabadora del celular, sin compresión de WhatsApp, sube ese techo.
 
+## Acabado «dulce»
+`--dulce` suaviza los agudos, da algo de calidez y baja un 4 % la velocidad sin cambiar el tono. `ajustes_chatter.json`
+admite `expr`, `cfg`, `temp`, `ref` (archivo dentro de voz-usuario) y `dulce: true` para fijar la voz elegida.
+
 ## Si suena robótica o monótona
 1. Unir varias grabaciones: `preparar_voz.py grab1.ogg grab2.ogg` (más variedad de entonación).
 2. XTTS: subir `--temp` (0.8-0.85). Chatterbox: subir `--expr` (0.6-0.75).
