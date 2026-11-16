@@ -1,0 +1,500 @@
+1
+00:00:00,350 --> 00:00:07,053
+En este video presentamos la experiencia
+número seis de Física de campos:
+
+2
+00:00:07,093 --> 00:00:13,243
+la bobina de Helmholtz y el campo
+magnético de una bobina circular.
+
+3
+00:00:13,283 --> 00:00:19,247
+Veremos el montaje, la teoría, los
+resultados, los cálculos y las
+
+4
+00:00:19,287 --> 00:00:20,448
+conclusiones.
+
+5
+00:00:21,383 --> 00:00:24,124
+El objetivo general es analizar cómo se
+
+6
+00:00:24,164 --> 00:00:27,119
+distribuye en el espacio la intensidad del
+
+7
+00:00:27,159 --> 00:00:32,682
+campo magnético que genera una bobina de
+Helmholtz. Para lograrlo, medimos las
+
+8
+00:00:32,722 --> 00:00:38,101
+componentes axial y perpendicular del
+campo a lo largo del eje de una bobina
+
+9
+00:00:38,141 --> 00:00:41,096
+circular, comparamos la curva experimental
+
+10
+00:00:41,136 --> 00:00:44,091
+con el ajuste del programa y con el modelo
+
+11
+00:00:44,131 --> 00:00:49,653
+teórico, calculamos el valor experimental
+de la permeabilidad del vacío con su
+
+12
+00:00:49,693 --> 00:00:55,073
+porcentaje de error, y comparamos el
+perfil de una sola bobina con el que se
+
+13
+00:00:55,113 --> 00:00:57,355
+espera para el par de Helmholtz.
+
+14
+00:00:58,283 --> 00:01:09,306
+El campo magnético lo producen las cargas
+en movimiento, y su unidad es el tesla.
+
+15
+00:01:09,346 --> 00:01:19,823
+La ley de Biot-Savart dice que cada
+pedacito de corriente aporta un campo que
+
+16
+00:01:19,863 --> 00:01:25,560
+disminuye con el cuadrado de la distancia.
+
+17
+00:01:25,600 --> 00:01:33,891
+Sobre el eje de una bobina circular el
+cálculo se simplifica:
+
+18
+00:01:33,931 --> 00:01:43,316
+las componentes perpendiculares se
+cancelan por pares y solo queda la
+
+19
+00:01:43,356 --> 00:01:53,150
+componente axial. Para una bobina de N
+espiras y radio R, el campo a una
+
+20
+00:01:53,190 --> 00:02:01,481
+distancia x del centro es B = μ₀·N·I·R² /
+[2(x² + R²)^(3/2)].
+
+21
+00:02:02,417 --> 00:02:16,450
+El campo es máximo en el centro de la
+bobina, y lejos de ella decae como 1/x³,
+
+22
+00:02:16,490 --> 00:02:21,863
+igual que un dipolo magnético.
+
+23
+00:02:21,903 --> 00:02:29,440
+En el centro, la ecuación se reduce a B(0)
+
+24
+00:02:29,480 --> 00:02:42,792
+= μ₀·N·I / (2R). Y de ahí despejamos la
+permeabilidad magnética del vacío:
+
+25
+00:02:42,832 --> 00:02:46,581
+μ₀ = 2R·B(0) / (N·I).
+
+26
+00:02:46,621 --> 00:02:54,700
+Su valor de referencia es 1,257 × 10⁻⁶
+T·m/A.
+
+27
+00:02:55,650 --> 00:03:00,238
+Por simetría, la componente perpendicular
+
+28
+00:03:00,278 --> 00:03:04,754
+del campo debería ser cero sobre el eje.
+
+29
+00:03:04,794 --> 00:03:09,382
+Si el sensor queda inclinado un ángulo θ,
+
+30
+00:03:09,422 --> 00:03:18,074
+registra una parte del campo axial en el
+canal perpendicular, y ese ángulo se
+
+31
+00:03:18,114 --> 00:03:21,461
+estima con θ ≈ arctan(B⊥/Bax).
+
+32
+00:03:21,501 --> 00:03:25,864
+En el arreglo de Helmholtz, dos bobinas
+
+33
+00:03:25,904 --> 00:03:30,605
+iguales separadas una distancia igual a su
+
+34
+00:03:30,645 --> 00:03:35,233
+radio producen en el punto medio un campo
+
+35
+00:03:35,273 --> 00:03:44,264
+casi uniforme, B_H = (4/5)^(3/2) · μ₀·N·I
+/ R. Y para comparar con la referencia
+
+36
+00:03:44,304 --> 00:03:48,328
+usamos el error relativo porcentual.
+
+37
+00:03:49,283 --> 00:03:57,235
+Usamos una bobina circular de 500 espiras
+y 10,06 cm de radio, un sensor de campo
+
+38
+00:03:57,275 --> 00:04:04,240
+magnético de dos ejes, axial y
+perpendicular, la interfaz PASCO 850 con
+
+39
+00:04:04,280 --> 00:04:11,738
+el software Capstone, y una pista con
+soportes para desplazar el sensor a lo
+
+40
+00:04:11,778 --> 00:04:14,402
+largo del eje de la bobina.
+
+41
+00:04:15,350 --> 00:04:18,745
+Primero conectamos la bobina, el sensor de
+
+42
+00:04:18,785 --> 00:04:22,180
+campo y la interfaz según el montaje de la
+
+43
+00:04:22,220 --> 00:04:28,723
+guía. Deslizamos el sensor por la pista
+hasta que la sonda quedó en el centro de
+
+44
+00:04:28,763 --> 00:04:34,285
+la bobina, y presionamos el botón TARE
+para poner el sensor en cero.
+
+45
+00:04:35,217 --> 00:04:43,342
+En el generador de señales de Capstone
+verificamos que el voltaje de CC estuviera
+
+46
+00:04:43,382 --> 00:04:45,862
+en 6,2 V y lo encendimos;
+
+47
+00:04:45,902 --> 00:04:53,826
+la interfaz registró una corriente de
+0,341 A. Pulsamos Vista previa, esperamos
+
+48
+00:04:53,866 --> 00:05:01,891
+a que la medida se estabilizara y pulsamos
+Mantener muestra, registrando las dos
+
+49
+00:05:01,931 --> 00:05:04,915
+componentes del campo a 10 Hz.
+
+50
+00:05:05,850 --> 00:05:13,128
+Repetimos la medición desplazando el
+sensor de 3 en 3 cm, desde 0 hasta 24 cm,
+
+51
+00:05:13,168 --> 00:05:15,848
+para un total de nueve datos.
+
+52
+00:05:15,888 --> 00:05:22,979
+A los datos del campo axial les aplicamos
+un ajuste de curva definido por el
+
+53
+00:05:23,019 --> 00:05:26,825
+usuario, con la forma de la ecuación (1).
+
+54
+00:05:27,750 --> 00:05:33,147
+Por último, con el sensor en el centro,
+
+55
+00:05:33,187 --> 00:05:39,002
+registramos el campo para tres corrientes:
+
+56
+00:05:39,042 --> 00:05:46,809
+0,329 A, 0,356 A y 0,383 A, para calcular
+μ₀ y su error.
+
+57
+00:05:47,750 --> 00:05:58,424
+El campo axial fue máximo en el centro,
+cerca de 9,86 × 10⁻⁴ T, y fue cayendo con
+
+58
+00:05:58,464 --> 00:06:03,847
+la distancia: a 3 cm conservaba cerca del
+
+59
+00:06:03,887 --> 00:06:09,271
+85 % de su valor, a 15 cm solo el 16 %, y
+
+60
+00:06:09,311 --> 00:06:15,884
+a 21 y 24 cm quedó en valores del orden de
+10⁻⁶ T.
+
+61
+00:06:16,817 --> 00:06:23,259
+La curva tiene la forma de campana que
+predice la ecuación (1).
+
+62
+00:06:23,299 --> 00:06:31,593
+El ajuste definido por el usuario siguió
+esa tendencia con un RMSE de 4,09 × 10⁻⁵
+
+63
+00:06:31,633 --> 00:06:35,914
+T, y dio un radio de 9,57 cm, frente a los
+
+64
+00:06:35,954 --> 00:06:44,249
+10,06 cm medidos. Los parámetros m, N e I
+del ajuste no se pueden interpretar por
+
+65
+00:06:44,289 --> 00:06:51,965
+separado, porque el programa los reparte
+como quiere; solo tiene sentido su
+
+66
+00:06:52,005 --> 00:06:52,891
+producto.
+
+67
+00:06:53,817 --> 00:07:00,096
+Frente a la curva teórica, los datos
+quedan por debajo en casi todo el
+
+68
+00:07:00,136 --> 00:07:06,595
+recorrido, y en el centro el campo medido
+es 7,4 % menor que el teórico.
+
+69
+00:07:07,550 --> 00:07:16,081
+La componente perpendicular debería ser
+cero sobre el eje, pero en el centro el
+
+70
+00:07:16,121 --> 00:07:24,217
+sensor registró 9,17 × 10⁻⁵ T, y esa
+lectura bajó junto con el campo axial.
+
+71
+00:07:24,257 --> 00:07:32,897
+Eso indica que el sensor estaba inclinado
+respecto al eje: con arctan(0,093), el
+
+72
+00:07:32,937 --> 00:07:35,175
+ángulo es de unos 5°.
+
+73
+00:07:35,215 --> 00:07:43,420
+Desde 18 cm la componente se volvió
+negativa, por el campo terrestre, que el
+
+74
+00:07:43,460 --> 00:07:51,882
+TARE solo compensa en el punto donde se
+presionó, y por la deriva del cero del
+
+75
+00:07:51,922 --> 00:07:52,642
+sensor.
+
+76
+00:07:53,583 --> 00:08:07,164
+Con el campo en el centro para cada
+corriente calculamos la permeabilidad.
+
+77
+00:08:07,204 --> 00:08:14,710
+Para la primera, con R = 0,1006 m, B(0) =
+
+78
+00:08:14,750 --> 00:08:26,306
+9,49 × 10⁻⁴ T, N = 500 e I = 0,329 A, μ₀ =
+1,1607 × 10⁻⁶ T·m/A.
+
+79
+00:08:27,250 --> 00:08:33,922
+Su error frente al valor de referencia es
+
+80
+00:08:33,962 --> 00:08:47,181
+de 7,66 %. Para las otras dos corrientes
+los errores fueron de 7,38 % y 8,06 %, y
+
+81
+00:08:47,221 --> 00:08:53,893
+el promedio de μ₀ fue 1,160 × 10⁻⁶ T·m/A.
+
+82
+00:08:54,817 --> 00:09:01,792
+Además, el campo en el centro creció en
+proporción a la corriente:
+
+83
+00:09:01,832 --> 00:09:06,256
+la recta de ajuste por el origen tiene una
+
+84
+00:09:06,296 --> 00:09:14,122
+pendiente de 2,883 mT/A, frente a 3,123
+mT/A de la recta teórica, y de esa
+
+85
+00:09:14,162 --> 00:09:19,118
+pendiente sale el mismo μ₀, con 7,7 % de
+error.
+
+86
+00:09:20,050 --> 00:09:27,795
+Los tres errores difieren entre sí menos
+de un punto porcentual, así que la causa
+
+87
+00:09:27,835 --> 00:09:34,907
+es sistemática: algo redujo el campo
+medido de la misma forma en todas las
+
+88
+00:09:34,947 --> 00:09:38,944
+pruebas. La más probable es la posición de
+
+89
+00:09:38,984 --> 00:09:42,981
+la sonda, porque un desplazamiento de 2 cm
+
+90
+00:09:43,021 --> 00:09:46,921
+respecto al centro reduce el campo en 5,7
+
+91
+00:09:46,961 --> 00:09:50,862
+%. También influyen el radio efectivo del
+
+92
+00:09:50,902 --> 00:09:58,551
+devanado, la inclinación del sensor y la
+calibración del sensor y del medidor de
+
+93
+00:09:58,591 --> 00:09:59,512
+corriente.
+
+94
+00:10:00,450 --> 00:10:08,650
+Por último, comparamos el perfil de una
+bobina con el par de Helmholtz.
+
+95
+00:10:08,690 --> 00:10:17,934
+Una sola bobina produce un pico en el
+centro, y a 5 cm ya perdió cerca del 28 %.
+
+96
+00:10:17,974 --> 00:10:22,460
+Con dos bobinas separadas una distancia
+
+97
+00:10:22,500 --> 00:10:27,334
+igual al radio, el campo en el punto medio
+
+98
+00:10:27,374 --> 00:10:32,209
+es 1,43 veces mayor, unos 1,52 mT, y forma
+
+99
+00:10:32,249 --> 00:10:41,609
+una meseta que varía menos del 0,5 % en
+±2,5 cm. Por esa región casi uniforme, el
+
+100
+00:10:41,649 --> 00:10:47,295
+arreglo se usa para generar campos de
+referencia.
+
+101
+00:10:48,250 --> 00:10:52,061
+En conclusión, comprobamos que el campo de
+
+102
+00:10:52,101 --> 00:10:59,305
+una bobina circular sobre su eje es máximo
+en el centro y disminuye de forma no
+
+103
+00:10:59,345 --> 00:11:05,907
+lineal con la distancia, con la forma que
+predice la ley de Biot-Savart.
+
+104
+00:11:05,947 --> 00:11:12,876
+Obtuvimos una permeabilidad magnética
+promedio de 1,160 × 10⁻⁶ T·m/A, con un
+
+105
+00:11:12,916 --> 00:11:16,635
+error del 7,7 %, reproducible y de origen
+
+106
+00:11:16,675 --> 00:11:23,512
+sistemático. La componente perpendicular
+no fue nula porque el sensor quedó
+
+107
+00:11:23,552 --> 00:11:25,713
+inclinado entre 3° y 5°.
+
+108
+00:11:25,753 --> 00:11:32,682
+Y vimos que dos bobinas separadas una
+distancia igual a su radio producen un
+
+109
+00:11:32,722 --> 00:11:39,834
+campo mayor y casi uniforme en la región
+central, que es justo el objetivo del
+
+110
+00:11:39,874 --> 00:11:41,759
+arreglo de Helmholtz.
