@@ -12,7 +12,8 @@ const C = {
 const FONT = 'Inter, "DejaVu Sans", sans-serif';
 
 type Cues = Record<string, number>;
-type Props = {visual: any; dur: number; cues: Cues; panel?: boolean};
+type Props = {visual: any; dur: number; cues: Cues; panel?: boolean; brand?: string};
+const BrandCtx = React.createContext('Experiencia 4 · Circuitos resistivos y ley de Ohm');
 const PanelCtx = React.createContext(false);
 
 const useT = () => {
@@ -44,7 +45,7 @@ const Frame: React.FC<{heading?: string; bg?: string; children: React.ReactNode;
 				</AbsoluteFill>
 			) : null}
 			<div style={{position: 'absolute', left: 96, top: 54, fontSize: 22, letterSpacing: 3, color: C.muted, textTransform: 'uppercase'}}>
-				Experiencia 4 · Circuitos resistivos y ley de Ohm
+				{React.useContext(BrandCtx)}
 			</div>
 			{heading ? (
 				<div style={{position: 'absolute', left: 96, top: 100, display: 'flex', alignItems: 'center', gap: 22,
@@ -175,7 +176,7 @@ const Equations: React.FC<Props> = ({visual: v, dur, cues}) => {
 	const eqs = v.eqs as any[];
 	const n = eqs.length;
 	const cols = n > 4 ? 2 : 1;
-	const h = eqs[0].big ? 200 : n > 4 ? 92 : 104;
+	const h = eqs[0].big ? 200 : n > 4 ? 92 : n > 2 ? 104 : 150;
 	const ats = eqs.map((e, i) => cueAt(cues, e.cue, 0.4 + i * 0.8) + (eqs.slice(0, i).filter((p) => p.cue === e.cue).length * 1.2));
 	// la ecuación activa (la última que apareció) se resalta
 	const active = ats.reduce((acc, a, i) => (t >= a ? i : acc), -1);
@@ -428,10 +429,10 @@ const Figure: React.FC<Props> = ({visual: v, dur, cues}) => {
 	return (
 		<Frame heading={v.heading} dur={dur}>
 			<div style={{display: 'flex', gap: 40, alignItems: 'flex-start', height: '100%'}}>
-				<Appear at={0.2} style={{flex: facts.length ? 1.6 : 1, background: C.card, borderRadius: 18, padding: 16, position: 'relative',
+				<Appear at={0.2} style={{flex: facts.length ? 2.1 : 1, background: C.card, borderRadius: 18, padding: 16, position: 'relative',
 					boxShadow: '0 10px 30px rgba(0,0,0,0.35)', display: 'flex', flexDirection: 'column'}}>
 					<div style={{clipPath: `inset(0 ${(1 - rev) * 100}% 0 0)`}}>
-						<Img src={staticFile(v.src)} style={{width: '100%', maxHeight: panel ? 470 : 560, objectFit: 'contain', display: 'block'}} />
+						<Img src={staticFile(v.src)} style={{width: '100%', maxHeight: panel ? 600 : 640, objectFit: 'contain', display: 'block'}} />
 					</div>
 					{rev < 1 ? <div style={{position: 'absolute', top: 16, bottom: 16, left: `calc(16px + ${rev * 100}% * (1 - 32px / 100%))`, width: 4, background: C.blue, boxShadow: `0 0 18px ${C.blue}`}} /> : null}
 					{v.caption ? <div style={{color: C.ink, fontSize: 24, marginTop: 10, textAlign: 'center'}}>{v.caption}</div> : null}
@@ -472,22 +473,22 @@ const relB = (x: number, R: number) => Math.pow(R, 3) / Math.pow(x * x + R * R, 
 const Coil: React.FC<Props> = ({visual: v, dur, cues}) => {
 	const t = useT();
 	const draw = useIn(0.2, 1.0);
-	const cx = 150, cy = 290, R = 95, rx = 26, ry = R; // elipse en perspectiva
+	const cx = 170, cy = 360, R = 125, rx = 34, ry = R; // elipse en perspectiva
 	const ring = `M${cx} ${cy - ry} a${rx} ${ry} 0 1 0 0.01 0`;
-	const xs = Array.from({length: 11}, (_, i) => i * 62);
-	const prof = xs.map((x, i) => `${i ? 'L' : 'M'}${cx + x} ${cy - 20 - 150 * relB(x, R)}`).join(' ');
+	const xs = Array.from({length: 11}, (_, i) => i * 64);
+	const prof = xs.map((x, i) => `${i ? 'L' : 'M'}${cx + x} ${cy - 30 - 230 * relB(x, R)}`).join(' ');
 	const sx = (t * 70) % 640; // sensor que recorre el eje
 	const sB = relB(sx, R);
 	const eqAt = cueAt(cues, v.eqcue, 6);
 	return (
 		<Frame heading={v.heading} dur={dur}>
 			<div style={{display: 'flex', gap: 30, alignItems: 'flex-start'}}>
-				<svg width={880} height={560} viewBox="0 0 880 560" style={{opacity: draw}}>
+				<svg width={880} height={640} viewBox="0 0 880 640" style={{opacity: draw}}>
 					<line x1={cx} y1={cy} x2={850} y2={cy} stroke={C.wire} strokeWidth={3} strokeDasharray="8 8" />
 					<text x={840} y={cy + 36} fill={C.muted} fontSize={26} textAnchor="end" fontFamily={FONT}>eje x</text>
 					{/* campo en el eje: flechas cuya longitud sigue B(x) */}
 					{xs.map((x, i) => {
-						const L = 46 * relB(x, R);
+						const L = 54 * relB(x, R);
 						return (
 							<g key={i} opacity={interpolate(t, [0.6 + i * 0.12, 1.1 + i * 0.12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
 								<line x1={cx + x - L / 2} y1={cy} x2={cx + x + L / 2} y2={cy} stroke={C.blue} strokeWidth={6} strokeLinecap="round" />
@@ -496,7 +497,7 @@ const Coil: React.FC<Props> = ({visual: v, dur, cues}) => {
 						);
 					})}
 					<Draw d={prof} at={1.0} dur={1.6} stroke={C.blue} width={5} />
-					<text x={cx + 300} y={cy - 190} fill={C.blue} fontSize={26} fontFamily={FONT} fontWeight={700}>B(x) sobre el eje</text>
+					<text x={cx + 260} y={cy - 262} fill={C.blue} fontSize={28} fontFamily={FONT} fontWeight={700}>B(x) sobre el eje</text>
 					{/* bobina con corriente */}
 					<path d={ring} fill="rgba(47,157,244,0.08)" stroke={C.gold} strokeWidth={10} />
 					<Flow d={ring} />
@@ -505,7 +506,7 @@ const Coil: React.FC<Props> = ({visual: v, dur, cues}) => {
 					{/* sensor que se desplaza */}
 					<g transform={`translate(${cx + sx}, ${cy})`}>
 						<rect x={-14} y={-30} width={28} height={60} rx={6} fill={C.blue} stroke={C.white} strokeWidth={3} />
-						<text x={0} y={92} fill={C.white} fontSize={26} textAnchor="middle" fontFamily={FONT}>B = {sB.toFixed(2)} B₀</text>
+						<text x={0} y={92} fill={C.white} fontSize={28} textAnchor="middle" fontFamily={FONT}>B = {sB.toFixed(2).replace('.', ',')} B₀</text>
 					</g>
 				</svg>
 				<div style={{flex: 1}}>
@@ -526,9 +527,9 @@ const Helmholtz: React.FC<Props> = ({visual: v, dur, cues}) => {
 	const t = useT();
 	const draw = useIn(0.2, 1.0);
 	const pairAt = cueAt(cues, v.pairCue, 6);
-	const R = 110, ax = 200, ay = 150, mid = 470; // bobinas en mid ± R/2
+	const R = 120, ax = 200, ay = 120, mid = 470; // bobinas en mid ± R/2
 	const X = (u: number) => mid + u * R;          // u en unidades de R
-	const Y = (b: number) => 520 - 230 * b / 1.5;   // b relativo a B(0) de una bobina
+	const Y = (b: number) => 600 - 270 * b / 1.5;   // b relativo a B(0) de una bobina
 	const us = Array.from({length: 121}, (_, i) => -3 + i * 0.05);
 	const one = us.map((u, i) => `${i ? 'L' : 'M'}${X(u)} ${Y(relB(u, 1))}`).join(' ');
 	const pair = us.map((u, i) => `${i ? 'L' : 'M'}${X(u)} ${Y(relB(u - 0.5, 1) + relB(u + 0.5, 1))}`).join(' ');
@@ -538,24 +539,25 @@ const Helmholtz: React.FC<Props> = ({visual: v, dur, cues}) => {
 	return (
 		<Frame heading={v.heading} dur={dur}>
 			<div style={{display: 'flex', gap: 30, alignItems: 'flex-start'}}>
-				<svg width={900} height={560} viewBox="0 0 900 560" style={{opacity: draw}}>
+				<svg width={900} height={640} viewBox="0 0 900 640" style={{opacity: draw}}>
 					<line x1={100} y1={ay} x2={860} y2={ay} stroke={C.wire} strokeWidth={3} strokeDasharray="8 8" />
+					<text x={850} y={ay + 34} fill={C.muted} fontSize={24} textAnchor="end" fontFamily={FONT}>eje</text>
 					{/* región entre las bobinas */}
-					<rect x={X(-0.5)} y={Y(1.6)} width={R} height={Y(0) - Y(1.6)} fill={C.blue} opacity={show2 ? 0.12 + 0.08 * pulse : 0} />
+					<rect x={X(-0.5)} y={Y(1.75)} width={R} height={Y(0) - Y(1.75)} fill={C.blue} opacity={show2 ? 0.12 + 0.08 * pulse : 0} />
 					{/* bobinas */}
 					<g opacity={1}><path d={ring(X(show2 ? -0.5 : 0))} fill="none" stroke={C.gold} strokeWidth={9} /><Flow d={ring(X(show2 ? -0.5 : 0))} n={10} /></g>
 					<g opacity={show2 ? 1 : 0}><path d={ring(X(0.5))} fill="none" stroke={C.gold} strokeWidth={9} /><Flow d={ring(X(0.5))} n={10} /></g>
 					{show2 ? <>
-						<line x1={X(-0.5)} y1={ay + 95} x2={X(0.5)} y2={ay + 95} stroke={C.white} strokeWidth={3} />
-						<text x={mid} y={ay + 125} fill={C.white} fontSize={26} textAnchor="middle" fontFamily={FONT}>separación = R</text>
+						<line x1={X(-0.5)} y1={ay - 90} x2={X(0.5)} y2={ay - 90} stroke={C.white} strokeWidth={3} />
+						<text x={mid} y={ay - 102} fill={C.white} fontSize={26} textAnchor="middle" fontFamily={FONT}>separación = R</text>
 					</> : null}
 					{/* perfiles */}
 					<line x1={100} y1={Y(0)} x2={860} y2={Y(0)} stroke={C.wire} strokeWidth={2} />
 					<Draw d={one} at={0.8} dur={1.4} stroke={C.white} width={4} dash />
-					<text x={X(1.6)} y={Y(relB(1.6, 1)) - 14} fill={C.muted} fontSize={24} fontFamily={FONT}>una bobina</text>
+					<text x={X(-2.95)} y={Y(relB(2.2, 1)) - 14} fill={C.muted} fontSize={24} fontFamily={FONT}>una bobina</text>
 					{show2 ? <>
 						<Draw d={pair} at={pairAt + 0.2} dur={1.6} stroke={C.blue} width={6} />
-						<text x={X(-2.9)} y={Y(1.431) - 10} fill={C.blue} fontSize={26} fontWeight={700} fontFamily={FONT}>par de Helmholtz: meseta, 1,43 × B(0)</text>
+						<text x={X(0.75)} y={Y(1.431) - 16} fill={C.blue} fontSize={26} fontWeight={700} fontFamily={FONT}>par de Helmholtz: meseta, 1,43 × B(0)</text>
 					</> : null}
 					<text x={X(0)} y={Y(0) + 32} fill={C.muted} fontSize={24} textAnchor="middle" fontFamily={FONT}>posición sobre el eje</text>
 				</svg>
@@ -570,7 +572,7 @@ const Helmholtz: React.FC<Props> = ({visual: v, dur, cues}) => {
 const KINDS: Record<string, React.FC<Props>> = {figure: Figure, coil: Coil, helmholtz: Helmholtz, title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
 const Slide: React.FC<Props> = (p) => {
 	const K = KINDS[p.visual.kind];
-	return <PanelCtx.Provider value={!!p.panel}><K {...p} /></PanelCtx.Provider>;
+	return <BrandCtx.Provider value={p.brand || 'Experiencia 4 · Circuitos resistivos y ley de Ohm'}><PanelCtx.Provider value={!!p.panel}><K {...p} /></PanelCtx.Provider></BrandCtx.Provider>;
 };
 
 export const Root: React.FC = () => (

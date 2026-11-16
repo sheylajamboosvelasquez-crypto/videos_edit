@@ -2,6 +2,7 @@
 # Datos: solo los del informe. Rangos de clips: ("cN", inicio, fin) dentro del clip N (ver offsets.json).
 
 NOMBRE = "lab6_helmholtz"
+BRAND = "Experiencia 6 · Bobina de Helmholtz: campo magnético de una bobina circular"
 CRUDO = "salida/lab6/trabajo/crudo_lab6_1080.mp4"  # los 10 clips de WhatsApp unidos y compuestos a 1080p
 MIEMBROS = ["Miguel Henríquez", "Iván Valdeblanquez", "David Jamboos", "Christian Charris", "Ian Tinoco"]
 PIE = "Física de campos · Grupo 26253 · Universidad de la Costa (CUC)"
