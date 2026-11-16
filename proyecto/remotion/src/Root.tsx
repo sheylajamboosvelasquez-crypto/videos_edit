@@ -54,7 +54,8 @@ const Frame: React.FC<{heading?: string; bg?: string; children: React.ReactNode;
 					<div style={{fontSize: 56, fontWeight: 700, letterSpacing: -0.5}}>{heading}</div>
 				</div>
 			) : null}
-			<div style={{position: 'absolute', left: 96, right: 96, top: 210, bottom: panel ? 70 : 150}}>{children}</div>
+			<div style={{position: 'absolute', left: 96, right: 96, top: 210, bottom: panel ? 70 : 150, display: 'flex', flexDirection: 'column',
+				justifyContent: panel ? 'center' : 'flex-start'}}>{children}</div>
 			</AbsoluteFill>
 		</AbsoluteFill>
 	);
@@ -175,7 +176,7 @@ const Equations: React.FC<Props> = ({visual: v, dur, cues}) => {
 	const t = useT();
 	const eqs = v.eqs as any[];
 	const n = eqs.length;
-	const cols = n > 4 ? 2 : 1;
+	const cols = n > 4 || n === 2 ? 2 : 1;
 	const h = eqs[0].big ? 200 : n > 4 ? 92 : n > 2 ? 104 : 150;
 	const ats = eqs.map((e, i) => cueAt(cues, e.cue, 0.4 + i * 0.8) + (eqs.slice(0, i).filter((p) => p.cue === e.cue).length * 1.2));
 	// la ecuación activa (la última que apareció) se resalta
@@ -557,7 +558,7 @@ const Helmholtz: React.FC<Props> = ({visual: v, dur, cues}) => {
 					<text x={X(-2.95)} y={Y(relB(2.2, 1)) - 14} fill={C.muted} fontSize={24} fontFamily={FONT}>una bobina</text>
 					{show2 ? <>
 						<Draw d={pair} at={pairAt + 0.2} dur={1.6} stroke={C.blue} width={6} />
-						<text x={X(0.75)} y={Y(1.431) - 16} fill={C.blue} fontSize={26} fontWeight={700} fontFamily={FONT}>par de Helmholtz: meseta, 1,43 × B(0)</text>
+						<text x={X(-2.95)} y={Y(1.431) - 16} fill={C.blue} fontSize={26} fontWeight={700} fontFamily={FONT}>par de Helmholtz: meseta, 1,43 × B(0)</text>
 					</> : null}
 					<text x={X(0)} y={Y(0) + 32} fill={C.muted} fontSize={24} textAnchor="middle" fontFamily={FONT}>posición sobre el eje</text>
 				</svg>
