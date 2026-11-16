@@ -6,17 +6,20 @@ segmento y de cada `cue` (para animaciones y cortes de clips)."""
 import json, os, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from segmentos import SEGMENTOS
+import importlib
+LAB = os.environ.get("LAB", "")  # "" = Lab 4; "lab6" = segmentos_lab6.py y salida/lab6
+SEGMENTOS = importlib.import_module("segmentos_" + LAB if LAB else "segmentos").SEGMENTOS
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TRAB = os.path.join(RAIZ, "salida", "trabajo")
+TRAB = os.path.join(RAIZ, "salida", LAB, "trabajo") if LAB else os.path.join(RAIZ, "salida", "trabajo")
 VOZ = os.path.join(TRAB, "voz")
 TTS = os.path.expanduser("~/.claude/skills/lab-fisica-narrado/scripts/tts_edge.py")
 PY = os.path.expanduser("~/.venvs/lab-fisica/bin/python")
 LEAD, TAIL, FPS = 0.35, 0.55, 30
 os.makedirs(VOZ, exist_ok=True)
-CLON = os.environ.get("VOZ") == "clon"
-EXT = "_clon.wav" if CLON else ".mp3"
+MODO_VOZ = os.environ.get("VOZ", "")  # "" = Salomé (edge-tts), "clon" = XTTS, "chatter" = Chatterbox (voz del usuario)
+CLON = MODO_VOZ in ("clon", "chatter")
+EXT = {"clon": "_clon.wav", "chatter": "_chatter.wav"}.get(MODO_VOZ, ".mp3")
 
 if CLON:  # todos los tramos de una vez: el modelo se carga una sola vez
     pend = [dict(texto=s["say"], salida=os.path.join(VOZ, s["id"] + EXT))
@@ -24,8 +27,12 @@ if CLON:  # todos los tramos de una vez: el modelo se carga una sola vez
     if pend:
         lote = os.path.join(VOZ, "lote_clon.json")
         json.dump(pend, open(lote, "w"), ensure_ascii=False)
-        subprocess.run([os.path.expanduser("~/.venvs/voz/bin/python"), "-I",
-                        os.path.join(RAIZ, ".claude/skills/voz-clonada/scripts/tts_clon.py"), "--lote", lote], check=True)
+        if MODO_VOZ == "chatter":
+            subprocess.run([os.path.expanduser("~/.venvs/chatter/bin/python"), "-I",
+                            os.path.join(RAIZ, ".claude/skills/voz-clonada/scripts/tts_chatter.py"), "--lote", lote, "--verificar"], check=True)
+        else:
+            subprocess.run([os.path.expanduser("~/.venvs/voz/bin/python"), "-I",
+                            os.path.join(RAIZ, ".claude/skills/voz-clonada/scripts/tts_clon.py"), "--lote", lote], check=True)
 
 
 def dur(p):
@@ -63,9 +70,12 @@ for s in SEGMENTOS:
         for it in v.get(key, []):
             if "cue" in it:
                 cues[it["cue"]] = cue_t(s["say"], it["cue"], a)
-    for key in ("lead", "note", "eq"):
+    for key in ("lead", "note", "eq", "counter"):
         if isinstance(v.get(key), dict) and "cue" in v[key]:
             cues[v[key]["cue"]] = cue_t(s["say"], v[key]["cue"], a)
+    for key in ("eqcue", "pairCue"):  # cues sueltos (texto) de las tarjetas animadas
+        if isinstance(v.get(key), str):
+            cues[v[key]] = cue_t(s["say"], v[key], a)
     out.append(dict(id=s["id"], start=round(t0, 4), dur=total, voice=a, cues=cues))
     print(f"{s['id']:5s} voz={a:6.2f}s  segmento={total:6.2f}s  inicio={t0:7.2f}s")
     t0 += total

@@ -1,0 +1,65 @@
+{
+ "clips": {
+  "c1": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.08.06 PM.mp4",
+   "start": 0.0,
+   "dur": 17.612,
+   "ori": "v"
+  },
+  "c2": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.08.12 PM.mp4",
+   "start": 17.612,
+   "dur": 16.578,
+   "ori": "h"
+  },
+  "c3": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.08.24 PM.mp4",
+   "start": 34.19,
+   "dur": 28.853,
+   "ori": "h"
+  },
+  "c4": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.08.50 PM.mp4",
+   "start": 63.043,
+   "dur": 57.038,
+   "ori": "v"
+  },
+  "c5": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.08.53 PM.mp4",
+   "start": 120.082,
+   "dur": 9.157,
+   "ori": "h"
+  },
+  "c6": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.09.02 PM.mp4",
+   "start": 129.238,
+   "dur": 23.183,
+   "ori": "v"
+  },
+  "c7": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.09.12 PM.mp4",
+   "start": 152.422,
+   "dur": 25.4,
+   "ori": "v"
+  },
+  "c8": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.09.19 PM.mp4",
+   "start": 177.822,
+   "dur": 16.912,
+   "ori": "h"
+  },
+  "c9": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.09.29 PM.mp4",
+   "start": 194.733,
+   "dur": 24.583,
+   "ori": "h"
+  },
+  "c10": {
+   "file": "crudo_lab6/WhatsApp Video 2026-11-15 at 12.09.46 PM.mp4",
+   "start": 219.317,
+   "dur": 39.127,
+   "ori": "h"
+  }
+ },
+ "total": 258.443
+}

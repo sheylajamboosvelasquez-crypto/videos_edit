@@ -7,14 +7,25 @@ Uso: video.py VERSION   (por ejemplo: video.py v1)"""
 import json, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from segmentos import SEGMENTOS, FONDO, FONDO_FIJO
+import importlib
+LAB = os.environ.get("LAB", "")
+_m = importlib.import_module("segmentos_" + LAB if LAB else "segmentos")
+SEGMENTOS, FONDO, FONDO_FIJO = _m.SEGMENTOS, _m.FONDO, _m.FONDO_FIJO
+NOMBRE = getattr(_m, "NOMBRE", "lab4_ley_de_ohm")
 
 VER = sys.argv[1] if len(sys.argv) > 1 else "v1"
 MODO_FONDO = "fondo" in sys.argv[2:]  # v2: grupo de fondo y tarjetas en recuadro
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TRAB = os.path.join(RAIZ, "salida", "trabajo")
+TRAB = os.path.join(RAIZ, "salida", LAB, "trabajo") if LAB else os.path.join(RAIZ, "salida", "trabajo")
 SEG = os.path.join(TRAB, "seg")
-CRUDO = os.path.join(RAIZ, "crudo lab 4.mp4")
+CRUDO = getattr(_m, "CRUDO", None) or os.path.join(RAIZ, "crudo lab 4.mp4")
+if CRUDO and not os.path.isabs(CRUDO): CRUDO = os.path.join(RAIZ, CRUDO)
+# rangos como ("c4", ini, fin): clip del crudo unido; se convierten con offsets.json
+_OFF = json.load(open(os.path.join(TRAB, "offsets.json")))["clips"] if os.path.exists(os.path.join(TRAB, "offsets.json")) else {}
+def rango(r):
+    if isinstance(r[0], str):
+        c = _OFF[r[0]]; return (c["start"] + r[1], c["start"] + r[2], "h")
+    return r
 REM = os.path.join(RAIZ, "proyecto", "remotion")
 CH = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 FONT = "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf"
@@ -40,7 +51,7 @@ def footage(s, t, out):
     parts, ins = [], []
     for i, (c, a, b) in enumerate(zip(clips, starts, ends)):
         d = round(b - a, 3)
-        r0, r1, ori = c["r"]
+        r0, r1, ori = rango(c["r"])
         L = r1 - r0
         if L >= d:
             ss, speed = r0 + (L - d) / 2, 1.0
@@ -82,7 +93,7 @@ def tomar(d):
     """Toma `d` segundos de salida del rollo FONDO (a velocidad 1/LENTO), en orden y dando la vuelta."""
     piezas, falta = [], d / LENTO
     while falta > 0.01:
-        a, b, o = FONDO[_pos[0]]
+        a, b, o = rango(FONDO[_pos[0]])
         ini = a + _pos[1]
         resto = b - ini
         if resto < 1.0:
@@ -121,7 +132,7 @@ def con_fondo(s, t, out):
              "--chrome-mode=chrome-for-testing", "--codec=prores", "--prores-profile=4444", "--pixel-format=yuva444p10le",
              "--image-format=png", "--muted", "--log=error"], cwd=REM)
     if s["id"] in FONDO_FIJO:
-        a, b, o = FONDO_FIJO[s["id"]][0]
+        a, b, o = rango(FONDO_FIJO[s["id"]][0])
         piezas, speed = [(a, b - a, o)], max(1.0, dur / (b - a))
     else:
         piezas, speed = tomar(dur), LENTO
@@ -157,7 +168,7 @@ if SOLO:
 lista = []
 for s in SEGMENTOS:
     out = os.path.join(SEG, f"{s['id']}.mp4")
-    if MODO_FONDO and s["visual"]["kind"] != "footage":
+    if MODO_FONDO and s["visual"]["kind"] != "footage" and s.get("fondo", True):
         os.makedirs(SEGF, exist_ok=True)
         out = os.path.join(SEGF, f"{s['id']}.mp4")
         if not os.path.exists(out):
@@ -213,7 +224,7 @@ srtp = os.path.join(TRAB, f"subs_{VER}.srt")
 open(srtp, "w").write("\n".join(srt))
 
 # ---- 3c. unión + subtítulos quemados + audio ----
-final = os.path.join(RAIZ, "salida", f"lab4_ley_de_ohm_{VER}.mp4")
+final = os.path.join(RAIZ, "salida", LAB, f"{NOMBRE}_{VER}.mp4") if LAB else os.path.join(RAIZ, "salida", f"{NOMBRE}_{VER}.mp4")
 style = "FontName=Inter,FontSize=16,PrimaryColour=&H00FFFFFF&,OutlineColour=&H50000000&,BackColour=&H50000000&,BorderStyle=3,Outline=0.8,Shadow=0,Alignment=2,MarginV=22"
 # concat por filtro (no demuxer): las tarjetas de Remotion y los clips de ffmpeg tienen
 # distinto formato de color y base de tiempo, así que se normalizan antes de unir
