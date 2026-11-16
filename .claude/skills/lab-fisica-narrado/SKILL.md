@@ -91,6 +91,18 @@ Duración de audio y de video con diferencia < 0,1 s; la última palabra del úl
 ## Plantilla de proyecto
 El proyecto del Lab 4 (repo videos_edit, carpeta `proyecto/`) sirve de plantilla: `segmentos.py` (texto + visual por tramo), `audio.py` (voz y tiempos), `props.py` + `remotion/` (tarjetas animadas) y `video.py` (clips, unión, voz con loudnorm, subtítulos quemados).
 
+## Varios laboratorios en el mismo repo
+- `proyecto/segmentos_<lab>.py` define `SEGMENTOS`, `FONDO`, `FONDO_FIJO`, `NOMBRE`, `BRAND` y `CRUDO`; se elige con `LAB=<lab>` (sin LAB = Lab 4).
+- Si el crudo son varios clips, se unen primero a 1080p (verticales compuestos sobre fondo desenfocado) y los rangos se escriben
+  como `("c4", 28.0, 34.0)` (clip 4, segundos dentro del clip); `salida/<lab>/trabajo/offsets.json` guarda el inicio de cada clip.
+- Voz: `VOZ=chatter` (voz clonada del usuario, skill voz-clonada, con verificación por frase), `VOZ=clon` (XTTS) o sin VOZ (Salomé).
+```bash
+LAB=lab6 VOZ=chatter ~/.venvs/lab-fisica/bin/python -I proyecto/audio.py     # voz + tiempos
+LAB=lab6 python3 -I proyecto/props.py                                          # props de las tarjetas
+LAB=lab6 ~/.venvs/lab-fisica/bin/python -I proyecto/video.py v1 fondo          # armado (grupo de fondo + recuadro)
+```
+- Tarjetas disponibles en Remotion: title, bullets, equations, circuit, measure, table, bulbs, figure (con `reveal`), coil, helmholtz; chips con `counter`.
+
 ## Límites conocidos de este entorno
 - En el entorno en la nube, `speech.platform.bing.com` (edge-tts) y `huggingface.co` pueden estar bloqueados por la política de red; Piper y Whisper base funcionan sin internet.
 - La voz Piper instalada es de baja calidad (x-low); edge-tts suena mucho mejor.
