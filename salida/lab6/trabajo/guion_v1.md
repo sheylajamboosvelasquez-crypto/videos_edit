@@ -1,7 +1,7 @@
 # Guion v1: Bobina de Helmholtz, campo magnético de una bobina circular (Experiencia N.º 6)
 
 Fuente única de datos: informe *Informe_Experiencia_6_Bobina_de_Helmholtz.docx* (grupo 26253, Física de campos, CUC). No se agregó ningún dato que no esté en el informe.
-Voz: la tuya, clonada (Chatterbox) · ritmo ≈ 2,5 palabras/s · duración estimada ≈ 9 min.
+Voz: la tuya, clonada (Chatterbox). v1.1: las fórmulas se narran en palabras, sin letras sueltas ni «mu cero», porque la voz clonada no las pronuncia bien · ritmo ≈ 2,5 palabras/s · duración estimada ≈ 9 min.
 
 **Cómo leer este guion**
 - **Pantalla**: lo que se ve. Igual que en la v2 del Lab 4: ustedes de fondo casi todo el tiempo y las tarjetas (ecuaciones, tablas, figuras) en un recuadro.
@@ -22,15 +22,15 @@ Voz: la tuya, clonada (Chatterbox) · ritmo ≈ 2,5 palabras/s · duración esti
 ## Bloque 2: Marco teórico · ≈ 100 s
 **2a. Biot-Savart y el campo en el eje**
 **Pantalla:** esquema de una espira con un punto sobre el eje; luego ecuación (1).
-**Voz:** El campo magnético lo producen las cargas en movimiento, y su unidad es el tesla. La ley de Biot-Savart dice que cada pedacito de corriente aporta un campo que disminuye con el cuadrado de la distancia. Sobre el eje de una bobina circular el cálculo se simplifica: las componentes perpendiculares se cancelan por pares y solo queda la componente axial. Para una bobina de ene espiras y radio erre, el campo a una distancia equis del centro es mu cero por ene por i por erre al cuadrado, dividido entre dos veces, equis al cuadrado más erre al cuadrado, elevado a tres medios.
+**Voz:** El campo magnético lo producen las cargas en movimiento, y su unidad es el tesla. La ley de Biot-Savart dice que cada pedacito de corriente aporta un campo que disminuye con el cuadrado de la distancia. Sobre el eje de una bobina circular el cálculo se simplifica: las componentes perpendiculares se cancelan por pares y solo queda la componente axial. Para una bobina con cierto número de espiras y cierto radio, el campo a una distancia del centro es la permeabilidad del vacío, por el número de espiras, por la corriente, por el radio al cuadrado, dividido entre dos veces, la distancia al cuadrado más el radio al cuadrado, elevado a tres medios.
 
 **2b. Campo en el centro y permeabilidad**
 **Pantalla:** ecuaciones (2) y (3); el valor μ₀ = 4π × 10⁻⁷ ≈ 1,257 × 10⁻⁶ T·m/A.
-**Voz:** El campo es máximo en el centro de la bobina, y lejos de ella decae como uno sobre equis al cubo, igual que un dipolo magnético. En el centro, la ecuación se reduce a mu cero por ene por i, entre dos erre. Y de ahí despejamos la permeabilidad magnética del vacío: mu cero es igual a dos erre por el campo en el centro, dividido entre ene por i. Su valor de referencia es uno coma doscientos cincuenta y siete por diez a la menos seis teslas metro por amperio.
+**Voz:** El campo es máximo en el centro de la bobina, y lejos de ella decae como uno sobre la distancia al cubo, igual que un dipolo magnético. En el centro, la ecuación se reduce a la permeabilidad, por el número de espiras, por la corriente, dividido entre dos veces el radio. Y de ahí despejamos la permeabilidad magnética del vacío: es igual a dos veces el radio por el campo en el centro, dividido entre el número de espiras por la corriente. Su valor de referencia es uno coma doscientos cincuenta y siete por diez a la menos seis teslas metro por amperio.
 
 **2c. Componente perpendicular, par de Helmholtz y error**
 **Pantalla:** ecuación (4); esquema de dos bobinas separadas una distancia R + ecuación (5); ecuación (6).
-**Voz:** Por simetría, la componente perpendicular del campo debería ser cero sobre el eje. Si el sensor queda inclinado un ángulo theta, registra una parte del campo axial en el canal perpendicular, y ese ángulo se estima con el arcotangente del cociente entre las dos componentes. En el arreglo de Helmholtz, dos bobinas iguales separadas una distancia igual a su radio producen en el punto medio un campo casi uniforme, que vale cuatro quintos elevado a tres medios, por mu cero por ene por i, sobre erre. Y para comparar con la referencia usamos el error relativo porcentual.
+**Voz:** Por simetría, la componente perpendicular del campo debería ser cero sobre el eje. Si el sensor queda inclinado un pequeño ángulo, registra una parte del campo axial en el canal perpendicular, y ese ángulo se estima con el arcotangente del cociente entre las dos componentes. En el arreglo de Helmholtz, dos bobinas iguales separadas una distancia igual a su radio producen en el punto medio un campo casi uniforme, que vale cuatro quintos elevado a tres medios, por la permeabilidad, por el número de espiras, por la corriente, dividido entre el radio. Y para comparar con la referencia usamos el error relativo porcentual.
 
 ## Bloque 3: Materiales · ≈ 22 s
 **Pantalla:** video crudo mostrando cada equipo, con rótulo.
@@ -41,12 +41,12 @@ Voz: la tuya, clonada (Chatterbox) · ritmo ≈ 2,5 palabras/s · duración esti
 **4a. Conexión y cero del sensor:** Primero conectamos la bobina, el sensor de campo y la interfaz según el montaje de la guía. Deslizamos el sensor por la pista hasta que la sonda quedó en el centro de la bobina, y presionamos el botón TARE para poner el sensor en cero.
 **4b. Corriente y toma de datos:** En el generador de señales de Capstone verificamos que el voltaje de corriente continua estuviera en seis coma dos voltios y lo encendimos; la interfaz registró una corriente de cero coma trescientos cuarenta y un amperios. Pulsamos vista previa, esperamos a que la medida se estabilizara y pulsamos mantener muestra, registrando las dos componentes del campo a diez hercios.
 **4c. Barrido y ajuste:** Repetimos la medición desplazando el sensor de tres en tres centímetros, desde cero hasta veinticuatro centímetros, para un total de nueve datos. A los datos del campo axial les aplicamos un ajuste de curva definido por el usuario, con la forma de la ecuación uno.
-**4d. Tres corrientes:** Por último, con el sensor en el centro, registramos el campo para tres corrientes: cero coma trescientos veintinueve, cero coma trescientos cincuenta y seis y cero coma trescientos ochenta y tres amperios, para calcular mu cero y su error.
+**4d. Tres corrientes:** Por último, con el sensor en el centro, registramos el campo para tres corrientes: cero coma trescientos veintinueve, cero coma trescientos cincuenta y seis y cero coma trescientos ochenta y tres amperios, para calcular la permeabilidad del vacío y su error.
 
 ## Bloque 5: Resultados: perfil del campo · ≈ 75 s
 **Pantalla:** Tabla 1 resaltando filas; luego Figura 1 (Capstone) y Figura 3 (comparación).
 **Voz (Tabla 1):** El campo axial fue máximo en el centro, cerca de nueve coma ochenta y seis por diez a la menos cuatro teslas, y fue cayendo con la distancia: a tres centímetros conservaba cerca del ochenta y cinco por ciento de su valor, a quince centímetros solo el dieciséis por ciento, y a veintiún y veinticuatro centímetros quedó en valores del orden de diez a la menos seis teslas.
-**Voz (Figura 1):** La curva tiene la forma de campana que predice la ecuación uno. El ajuste definido por el usuario siguió esa tendencia con un error cuadrático medio de cuatro coma cero nueve por diez a la menos cinco teslas, y dio un radio de nueve coma cincuenta y siete centímetros, frente a los diez coma cero seis medidos. Los parámetros eme, ene e i del ajuste no se pueden interpretar por separado, porque el programa los reparte como quiere; solo tiene sentido su producto.
+**Voz (Figura 1):** La curva tiene la forma de campana que predice la ecuación uno. El ajuste definido por el usuario siguió esa tendencia con un error cuadrático medio de cuatro coma cero nueve por diez a la menos cinco teslas, y dio un radio de nueve coma cincuenta y siete centímetros, frente a los diez coma cero seis medidos. Los parámetros del ajuste no se pueden interpretar por separado, porque el programa los reparte como quiere; solo tiene sentido su producto.
 **Voz (Figura 3):** Frente a la curva teórica, los datos quedan por debajo en casi todo el recorrido, y en el centro el campo medido es siete coma cuatro por ciento menor que el teórico.
 
 ## Bloque 6: Resultados: componente perpendicular · ≈ 35 s
@@ -55,8 +55,8 @@ Voz: la tuya, clonada (Chatterbox) · ritmo ≈ 2,5 palabras/s · duración esti
 
 ## Bloque 7: Cálculo de μ₀ y error · ≈ 80 s
 **Pantalla:** Tabla 3 → ecuación (7) → ecuación (8) → Tabla 4 → Figura 4.
-**Voz:** Con el campo en el centro para cada corriente calculamos la permeabilidad. Para la primera, con radio de cero coma mil seis metros, campo de nueve coma cuarenta y nueve por diez a la menos cuatro teslas, quinientas espiras y cero coma trescientos veintinueve amperios, mu cero da uno coma mil seiscientos siete por diez a la menos seis teslas metro por amperio. Su error frente al valor de referencia es de siete coma sesenta y seis por ciento. Para las otras dos corrientes los errores fueron de siete coma treinta y ocho y ocho coma cero seis por ciento, y el promedio de mu cero fue uno coma ciento sesenta por diez a la menos seis.
-Además, el campo en el centro creció en proporción a la corriente: la recta de ajuste por el origen tiene una pendiente de dos coma ochocientos ochenta y tres militeslas por amperio, frente a tres coma ciento veintitrés de la recta teórica, y de esa pendiente sale el mismo mu cero, con siete coma siete por ciento de error.
+**Voz:** Con el campo en el centro para cada corriente calculamos la permeabilidad. Para la primera, con radio de cero coma mil seis metros, campo de nueve coma cuarenta y nueve por diez a la menos cuatro teslas, quinientas espiras y cero coma trescientos veintinueve amperios, la permeabilidad da uno coma mil seiscientos siete por diez a la menos seis teslas metro por amperio. Su error frente al valor de referencia es de siete coma sesenta y seis por ciento. Para las otras dos corrientes los errores fueron de siete coma treinta y ocho y ocho coma cero seis por ciento, y el promedio de la permeabilidad fue uno coma ciento sesenta por diez a la menos seis.
+Además, el campo en el centro creció en proporción a la corriente: la recta de ajuste por el origen tiene una pendiente de dos coma ochocientos ochenta y tres militeslas por amperio, frente a tres coma ciento veintitrés de la recta teórica, y de esa pendiente sale la misma permeabilidad, con siete coma siete por ciento de error.
 
 ## Bloque 8: Análisis: por qué el error y el par de Helmholtz · ≈ 70 s
 **Pantalla:** viñetas con las causas; luego Figura 5 con la meseta resaltada.

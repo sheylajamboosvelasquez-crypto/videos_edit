@@ -36,8 +36,8 @@ SEGMENTOS = [
         eqcue="Para una bobina"),
         say="El campo magnético lo producen las cargas en movimiento, y su unidad es el tesla. La ley de Biot Savart dice que cada pedacito de corriente aporta un campo "
             "que disminuye con el cuadrado de la distancia. Sobre el eje de una bobina circular el cálculo se simplifica: las componentes perpendiculares se cancelan por pares "
-            "y solo queda la componente axial. Para una bobina de ene espiras y radio erre, el campo a una distancia equis del centro es mu cero por ene por i por erre al cuadrado, "
-            "dividido entre dos veces, equis al cuadrado más erre al cuadrado, elevado a tres medios.",
+            "y solo queda la componente axial. Para una bobina con cierto número de espiras y cierto radio, el campo a una distancia del centro es la permeabilidad del vacío, por el número de espiras, por la corriente, por el radio al cuadrado, "
+            "dividido entre dos veces, la distancia al cuadrado más el radio al cuadrado, elevado a tres medios.",
         sub="El campo magnético lo producen las cargas en movimiento, y su unidad es el tesla. La ley de Biot-Savart dice que cada pedacito de corriente aporta un campo "
             "que disminuye con el cuadrado de la distancia. Sobre el eje de una bobina circular el cálculo se simplifica: las componentes perpendiculares se cancelan por pares "
             "y solo queda la componente axial. Para una bobina de N espiras y radio R, el campo a una distancia x del centro es B = μ₀·N·I·R² / [2(x² + R²)^(3/2)]."),
@@ -45,9 +45,9 @@ SEGMENTOS = [
         eqs=[dict(src="eq6/eq2.png", cue="En el centro"), dict(src="eq6/eq3.png", cue="Y de ahí")],
         note=dict(text="μ₀ = 4π × 10⁻⁷ ≈ 1,257 × 10⁻⁶ T·m/A", cue="Su valor de referencia"),
         counter=dict(label="Lejos de la bobina", text="B ∝ 1/x³ (como un dipolo)", cue="decae")),
-        say="El campo es máximo en el centro de la bobina, y lejos de ella decae como uno sobre equis al cubo, igual que un dipolo magnético. "
-            "En el centro, la ecuación se reduce a mu cero por ene por i, entre dos erre. Y de ahí despejamos la permeabilidad magnética del vacío: "
-            "mu cero es igual a dos erre por el campo en el centro, dividido entre ene por i. "
+        say="El campo es máximo en el centro de la bobina, y lejos de ella decae como uno sobre la distancia al cubo, igual que un dipolo magnético. "
+            "En el centro, la ecuación se reduce a la permeabilidad, por el número de espiras, por la corriente, dividido entre dos veces el radio. Y de ahí despejamos la permeabilidad magnética del vacío: "
+            "es igual a dos veces el radio por el campo en el centro, dividido entre el número de espiras por la corriente. "
             "Su valor de referencia es uno coma doscientos cincuenta y siete por diez a la menos seis teslas metro por amperio.",
         sub="El campo es máximo en el centro de la bobina, y lejos de ella decae como 1/x³, igual que un dipolo magnético. "
             "En el centro, la ecuación se reduce a B(0) = μ₀·N·I / (2R). Y de ahí despejamos la permeabilidad magnética del vacío: "
@@ -55,10 +55,10 @@ SEGMENTOS = [
     dict(id="b2c", visual=dict(kind="helmholtz", heading="Sensor inclinado, par de Helmholtz y error",
         eqs=[dict(src="eq6/eq4.png", cue="Si el sensor"), dict(src="eq6/eq5.png", cue="producen en el punto medio"), dict(src="eq6/eq6.png", cue="Y para comparar")],
         pairCue="En el arreglo de Helmholtz"),
-        say="Por simetría, la componente perpendicular del campo debería ser cero sobre el eje. Si el sensor queda inclinado un ángulo theta, "
+        say="Por simetría, la componente perpendicular del campo debería ser cero sobre el eje. Si el sensor queda inclinado un pequeño ángulo, "
             "registra una parte del campo axial en el canal perpendicular, y ese ángulo se estima con el arcotangente del cociente entre las dos componentes. "
             "En el arreglo de Helmholtz, dos bobinas iguales separadas una distancia igual a su radio producen en el punto medio un campo casi uniforme, "
-            "que vale cuatro quintos elevado a tres medios, por mu cero por ene por i, sobre erre. Y para comparar con la referencia usamos el error relativo porcentual.",
+            "que vale cuatro quintos elevado a tres medios, por la permeabilidad, por el número de espiras, por la corriente, dividido entre el radio. Y para comparar con la referencia usamos el error relativo porcentual.",
         sub="Por simetría, la componente perpendicular del campo debería ser cero sobre el eje. Si el sensor queda inclinado un ángulo θ, "
             "registra una parte del campo axial en el canal perpendicular, y ese ángulo se estima con θ ≈ arctan(B⊥/Bax). "
             "En el arreglo de Helmholtz, dos bobinas iguales separadas una distancia igual a su radio producen en el punto medio un campo casi uniforme, "
@@ -108,7 +108,7 @@ SEGMENTOS = [
             dict(r=("c4", 34.0, 40.0), label="I = 0,383 A · B = 0,001086 T", cue="cero coma trescientos ochenta y tres"),
             dict(r=("c10", 28.0, 34.0), label="Lecturas para calcular μ₀", cue="para calcular")]),
         say="Por último, con el sensor en el centro, registramos el campo para tres corrientes: cero coma trescientos veintinueve, cero coma trescientos cincuenta y seis "
-            "y cero coma trescientos ochenta y tres amperios, para calcular mu cero y su error.",
+            "y cero coma trescientos ochenta y tres amperios, para calcular la permeabilidad del vacío y su error.",
         sub="Por último, con el sensor en el centro, registramos el campo para tres corrientes: 0,329 A, 0,356 A y 0,383 A, para calcular μ₀ y su error."),
 
     # ---------------- 5. Resultados: perfil del campo ----------------
@@ -130,7 +130,7 @@ SEGMENTOS = [
                dict(text="m, N e I no se interpretan por separado; solo su producto", cue="Los parámetros")]),
         say="La curva tiene la forma de campana que predice la ecuación uno. El ajuste definido por el usuario siguió esa tendencia con un error cuadrático medio "
             "de cuatro coma cero nueve por diez a la menos cinco teslas, y dio un radio de nueve coma cincuenta y siete centímetros, frente a los diez coma cero seis medidos. "
-            "Los parámetros eme, ene e i del ajuste no se pueden interpretar por separado, porque el programa los reparte como quiere; solo tiene sentido su producto.",
+            "Los parámetros del ajuste no se pueden interpretar por separado, porque el programa los reparte como quiere; solo tiene sentido su producto.",
         sub="La curva tiene la forma de campana que predice la ecuación (1). El ajuste definido por el usuario siguió esa tendencia con un RMSE "
             "de 4,09 × 10⁻⁵ T, y dio un radio de 9,57 cm, frente a los 10,06 cm medidos. "
             "Los parámetros m, N e I del ajuste no se pueden interpretar por separado, porque el programa los reparte como quiere; solo tiene sentido su producto."),
@@ -158,11 +158,11 @@ SEGMENTOS = [
     dict(id="b7a", visual=dict(kind="table", heading="Tabla 3 · Permeabilidad con el campo en el centro",
         cols=["I (A)", "B(0) med. (T)", "B(0) teór. (T)", "μ₀,exp (T·m/A)"],
         rows=[["0,329", "9,490 × 10⁻⁴", "1,027 × 10⁻³", "1,1607 × 10⁻⁶"], ["0,356", "1,030 × 10⁻³", "1,112 × 10⁻³", "1,1642 × 10⁻⁶"], ["0,383", "1,100 × 10⁻³", "1,196 × 10⁻³", "1,1557 × 10⁻⁶"]],
-        marks=[dict(row=0, col=0, cue="Para la primera"), dict(row=0, col=1, cue="campo de nueve"), dict(row=0, col=3, cue="mu cero da")],
-        eqs=[dict(src="eq6/eq7.png", cue="mu cero da")]),
+        marks=[dict(row=0, col=0, cue="Para la primera"), dict(row=0, col=1, cue="campo de nueve"), dict(row=0, col=3, cue="la permeabilidad da")],
+        eqs=[dict(src="eq6/eq7.png", cue="la permeabilidad da")]),
         say="Con el campo en el centro para cada corriente calculamos la permeabilidad. Para la primera, con radio de cero coma mil seis metros, "
             "campo de nueve coma cuarenta y nueve por diez a la menos cuatro teslas, quinientas espiras y cero coma trescientos veintinueve amperios, "
-            "mu cero da uno coma mil seiscientos siete por diez a la menos seis teslas metro por amperio.",
+            "la permeabilidad da uno coma mil seiscientos siete por diez a la menos seis teslas metro por amperio.",
         sub="Con el campo en el centro para cada corriente calculamos la permeabilidad. Para la primera, con R = 0,1006 m, "
             "B(0) = 9,49 × 10⁻⁴ T, N = 500 e I = 0,329 A, μ₀ = 1,1607 × 10⁻⁶ T·m/A."),
     dict(id="b7b", visual=dict(kind="table", heading="Tabla 4 · Error porcentual de μ₀",
@@ -172,15 +172,15 @@ SEGMENTOS = [
         eqs=[dict(src="eq6/eq8.png", cue="Su error")],
         counter=dict(label="μ₀ promedio", value="1,160 × 10⁻⁶ T·m/A", cue="el promedio")),
         say="Su error frente al valor de referencia es de siete coma sesenta y seis por ciento. Para las otras dos corrientes los errores fueron de "
-            "siete coma treinta y ocho y ocho coma cero seis por ciento, y el promedio de mu cero fue uno coma ciento sesenta por diez a la menos seis.",
+            "siete coma treinta y ocho y ocho coma cero seis por ciento, y el promedio de la permeabilidad fue uno coma ciento sesenta por diez a la menos seis.",
         sub="Su error frente al valor de referencia es de 7,66 %. Para las otras dos corrientes los errores fueron de 7,38 % y 8,06 %, "
             "y el promedio de μ₀ fue 1,160 × 10⁻⁶ T·m/A."),
     dict(id="b7c", visual=dict(kind="figure", heading="Figura 4 · Campo en el centro vs. corriente", src="fig6/fig4.png", reveal=True,
         facts=[dict(text="B(0) crece en proporción a I", cue="creció en proporción"),
                dict(text="Pendiente medida 2,883 mT/A · teórica 3,123 mT/A", cue="pendiente"),
-               dict(text="De la pendiente: μ₀ = 1,160 × 10⁻⁶ T·m/A (7,7 % de error)", cue="sale el mismo")]),
+               dict(text="De la pendiente: μ₀ = 1,160 × 10⁻⁶ T·m/A (7,7 % de error)", cue="sale la misma")]),
         say="Además, el campo en el centro creció en proporción a la corriente: la recta de ajuste por el origen tiene una pendiente de dos coma ochocientos ochenta y tres "
-            "militeslas por amperio, frente a tres coma ciento veintitrés de la recta teórica, y de esa pendiente sale el mismo mu cero, con siete coma siete por ciento de error.",
+            "militeslas por amperio, frente a tres coma ciento veintitrés de la recta teórica, y de esa pendiente sale la misma permeabilidad, con siete coma siete por ciento de error.",
         sub="Además, el campo en el centro creció en proporción a la corriente: la recta de ajuste por el origen tiene una pendiente de 2,883 mT/A, "
             "frente a 3,123 mT/A de la recta teórica, y de esa pendiente sale el mismo μ₀, con 7,7 % de error."),
 
