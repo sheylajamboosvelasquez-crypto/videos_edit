@@ -14,3 +14,9 @@ salida/trabajo/seg_fondo/
 salida/trabajo/stats.txt
 salida/prueba_voz/
 crudo_lab6/
+salida/*/trabajo/*.log
+salida/*/trabajo/voz/
+salida/*/trabajo/seg/
+salida/*/trabajo/seg_fondo/
+salida/*/trabajo/previa/
+salida/*/trabajo/lista_*.txt
