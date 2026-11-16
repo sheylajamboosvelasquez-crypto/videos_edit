@@ -27,7 +27,8 @@ def rango(r):
         c = _OFF[r[0]]; return (c["start"] + r[1], c["start"] + r[2], "h")
     return r
 REM = os.path.join(RAIZ, "proyecto", "remotion")
-CH = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+import glob as _g
+CH = (sorted(_g.glob("/opt/pw-browsers/chromium-*/chrome-linux*/chrome")) or ["/opt/pw-browsers/chromium-1243/chrome-linux64/chrome"])[-1]  # Chromium de Playwright (la carpeta cambia por contenedor)
 FONT = "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf"
 LEAD = 0.35
 T = {t["id"]: t for t in json.load(open(os.path.join(TRAB, "tiempos.json")))}
