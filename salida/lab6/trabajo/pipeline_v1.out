@@ -1,0 +1,4 @@
+exit=1
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['npx', 'remotion', 'render', 'src/index.ts', 'Slide', '/home/user/videos_edit/salida/lab6/trabajo/seg_fondo/b7c_panel.mov', '--props=/home/user/videos_edit/salida/lab6/trabajo/seg_fondo/b7c_panel.json', '--browser-executable=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome', '--chrome-mode=chrome-for-testing', '--codec=prores', '--prores-profile=4444', '--pixel-format=yuva444p10le', '--image-format=png', '--muted', '--log=error']' returned non-zero exit status 1.

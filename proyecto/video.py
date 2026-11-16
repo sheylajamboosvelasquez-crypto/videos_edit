@@ -148,6 +148,7 @@ def con_fondo(s, t, out):
           f"[fondo][pn]overlay=664:110:format=auto,format=yuv420p,setsar=1[v]")
     run(["ffmpeg", "-v", "warning", "-y", *ins, "-i", mov, "-filter_complex", fc, "-map", "[v]", "-t", f"{dur}",
          "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", "30", "-an", out])
+    os.remove(mov)  # el ProRes 4444 con transparencia ocupa ~1 GB por tarjeta: se borra apenas se compone
 
 
 # ---- 1-2. segmentos de video ----
