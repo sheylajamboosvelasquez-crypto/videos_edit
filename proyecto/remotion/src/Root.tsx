@@ -6,7 +6,7 @@ import {
 
 // ---------- tema ----------
 const C = {
-	bg: '#0d1524', bg2: '#16233a', red: '#c8102e', redSoft: '#f04a5f', white: '#f5f7fb',
+	bg: '#0d1524', bg2: '#16233a', red: '#c8102e', blue: '#2f9df4', redSoft: '#f04a5f', white: '#f5f7fb',
 	muted: '#9fb0c8', card: '#ffffff', ink: '#111827', gold: '#f2b705', wire: '#cfd8e6',
 };
 const FONT = 'Inter, "DejaVu Sans", sans-serif';
@@ -100,11 +100,12 @@ const Title: React.FC<Props> = ({visual: v, dur}) => {
 				<Img src={staticFile(v.bg)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(26px) brightness(0.32)', transform: `scale(${zoom})`}} />
 			</AbsoluteFill>
 			<AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(13,21,36,0.92) 0%, rgba(13,21,36,0.55) 70%, rgba(13,21,36,0.2) 100%)'}} />
-			<div style={{position: 'absolute', right: 150, top: 150, width: 420, height: 750, borderRadius: 24, overflow: 'hidden',
+			<div style={{position: 'absolute', right: v.theme === 'mag' ? 110 : 150, top: v.theme === 'mag' ? 230 : 150,
+				width: v.theme === 'mag' ? 760 : 420, height: v.theme === 'mag' ? 570 : 750, borderRadius: 24, overflow: 'hidden',
 				boxShadow: '0 30px 80px rgba(0,0,0,0.5)', opacity: b, transform: `translateY(${(1 - b) * 30}px)`}}>
 				<Img src={staticFile(v.bg)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
 			</div>
-			<div style={{position: 'absolute', left: 120, top: 220, width: 1150}}>
+			<div style={{position: 'absolute', left: 120, top: 220, width: v.theme === 'mag' ? 880 : 1150}}>
 				<div style={{fontSize: 30, color: C.redSoft, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', opacity: a}}>{v.kicker}</div>
 				<div style={{fontSize: 96, fontWeight: 800, lineHeight: 1.04, marginTop: 18, letterSpacing: -1.5, opacity: a, transform: `translateY(${(1 - a) * 30}px)`}}>{v.title}</div>
 				<div style={{width: 160, height: 8, background: C.red, borderRadius: 4, marginTop: 36, transform: `scaleX(${b})`, transformOrigin: 'left'}} />
@@ -145,6 +146,22 @@ const Bullets: React.FC<Props> = ({visual: v, dur, cues}) => (
 	</Frame>
 );
 
+
+// ---------- chip de resultado (aparece con un pulso) ----------
+const Chip: React.FC<{at: number; label?: string; value?: string; text?: string}> = ({at, label, value, text}) => {
+	const f = useCurrentFrame();
+	const {fps} = useVideoConfig();
+	const p = spring({frame: f - Math.round(at * fps), fps, config: {damping: 12, stiffness: 160}});
+	const glow = interpolate(f - Math.round(at * fps), [0, 10, 40], [0, 1, 0.35], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+	return (
+		<div style={{display: 'inline-flex', alignItems: 'center', gap: 18, padding: '14px 26px', borderRadius: 16, background: 'rgba(47,157,244,0.16)',
+			border: `2px solid ${C.blue}`, boxShadow: `0 0 ${30 * glow}px rgba(47,157,244,${0.6 * glow})`, transform: `scale(${0.6 + 0.4 * p})`, opacity: p}}>
+			{label ? <span style={{fontSize: 26, color: C.muted}}>{label}</span> : null}
+			<span style={{fontSize: 34, fontWeight: 700, color: C.white, fontVariantNumeric: 'tabular-nums'}}>{value || text}</span>
+		</div>
+	);
+};
+
 // ---------- ecuaciones ----------
 const EqCard: React.FC<{src: string; h: number; glow?: number}> = ({src, h, glow = 0}) => (
 	<div style={{background: C.card, borderRadius: 16, padding: '18px 30px', display: 'inline-block',
@@ -176,6 +193,9 @@ const Equations: React.FC<Props> = ({visual: v, dur, cues}) => {
 					);
 				})}
 			</div>
+			{v.counter ? (
+				<div style={{position: 'absolute', bottom: 0, right: 0}}><Chip at={cueAt(cues, v.counter.cue)} label={v.counter.label} value={v.counter.value} text={v.counter.text} /></div>
+			) : null}
 			{v.note ? (
 				<Appear at={cueAt(cues, v.note.cue)} style={{position: 'absolute', bottom: 0, left: 0, fontSize: 34, color: C.white,
 					background: 'rgba(200,16,46,0.18)', border: `2px solid ${C.red}`, borderRadius: 14, padding: '14px 26px'}}>
@@ -323,6 +343,10 @@ const Table: React.FC<Props> = ({visual: v, dur, cues}) => {
 					</tbody>
 				</table>
 			</Appear>
+			<div style={{display: 'flex', gap: 30, alignItems: 'center', marginTop: 28}}>
+				{(v.eqs || []).map((e: any, i: number) => <Appear key={i} at={cueAt(cues, e.cue)}><EqCard src={e.src} h={74} /></Appear>)}
+				{v.counter ? <Chip at={cueAt(cues, v.counter.cue)} label={v.counter.label} value={v.counter.value} text={v.counter.text} /> : null}
+			</div>
 		</Frame>
 	);
 };
@@ -394,25 +418,32 @@ const Bulbs: React.FC<Props> = ({visual: v, dur, cues}) => {
 	);
 };
 
-// ---------- figura (gráfica del informe) con pie y viñetas opcionales ----------
+// ---------- figura (gráfica del informe): se revela de izquierda a derecha ----------
 const Figure: React.FC<Props> = ({visual: v, dur, cues}) => {
 	const panel = React.useContext(PanelCtx);
+	const f = useCurrentFrame();
+	const {fps} = useVideoConfig();
 	const facts = (v.facts || []) as any[];
+	const rev = v.reveal ? interpolate(f, [Math.round(0.3 * fps), Math.round(1.8 * fps)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)}) : 1;
 	return (
 		<Frame heading={v.heading} dur={dur}>
 			<div style={{display: 'flex', gap: 40, alignItems: 'flex-start', height: '100%'}}>
-				<Appear at={0.3} style={{flex: facts.length ? 1.6 : 1, background: C.card, borderRadius: 18, padding: 16,
-					boxShadow: '0 10px 30px rgba(0,0,0,0.35)', maxHeight: panel ? 560 : 640, display: 'flex', flexDirection: 'column'}}>
-					<Img src={staticFile(v.src)} style={{width: '100%', maxHeight: panel ? 470 : 560, objectFit: 'contain', display: 'block'}} />
+				<Appear at={0.2} style={{flex: facts.length ? 1.6 : 1, background: C.card, borderRadius: 18, padding: 16, position: 'relative',
+					boxShadow: '0 10px 30px rgba(0,0,0,0.35)', display: 'flex', flexDirection: 'column'}}>
+					<div style={{clipPath: `inset(0 ${(1 - rev) * 100}% 0 0)`}}>
+						<Img src={staticFile(v.src)} style={{width: '100%', maxHeight: panel ? 470 : 560, objectFit: 'contain', display: 'block'}} />
+					</div>
+					{rev < 1 ? <div style={{position: 'absolute', top: 16, bottom: 16, left: `calc(16px + ${rev * 100}% * (1 - 32px / 100%))`, width: 4, background: C.blue, boxShadow: `0 0 18px ${C.blue}`}} /> : null}
 					{v.caption ? <div style={{color: C.ink, fontSize: 24, marginTop: 10, textAlign: 'center'}}>{v.caption}</div> : null}
 				</Appear>
 				{facts.length ? (
-					<div style={{flex: 1, paddingTop: 10}}>
-						{facts.map((f: any, i: number) => (
-							<Appear key={i} at={cueAt(cues, f.cue, 1 + i)} style={{fontSize: 32, lineHeight: 1.3, marginBottom: 24, display: 'flex', gap: 16}}>
-								<span style={{color: C.redSoft, fontWeight: 800}}>▸</span><span>{f.text}</span>
+					<div style={{flex: 1, paddingTop: 6}}>
+						{facts.map((fc: any, i: number) => (
+							<Appear key={i} at={cueAt(cues, fc.cue, 1 + i)} style={{fontSize: 31, lineHeight: 1.3, marginBottom: 22, display: 'flex', gap: 16}}>
+								<span style={{color: C.blue, fontWeight: 800}}>▸</span><span>{fc.text}</span>
 							</Appear>
 						))}
+						{v.eq ? <Appear at={cueAt(cues, v.eqcue, 2)}><EqCard src={v.eq} h={78} /></Appear> : null}
 					</div>
 				) : null}
 			</div>
@@ -420,7 +451,123 @@ const Figure: React.FC<Props> = ({visual: v, dur, cues}) => {
 	);
 };
 
-const KINDS: Record<string, React.FC<Props>> = {figure: Figure, title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
+// ---------- utilidades SVG animadas ----------
+// trazo que se dibuja solo (pathLength=1 normaliza el largo)
+const Draw: React.FC<{d: string; at: number; dur?: number; stroke: string; width: number; dash?: boolean}> = ({d, at, dur = 1.2, stroke, width, dash}) => {
+	const f = useCurrentFrame();
+	const {fps} = useVideoConfig();
+	const p = interpolate(f, [Math.round(at * fps), Math.round((at + dur) * fps)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+	return <path d={d} fill="none" stroke={stroke} strokeWidth={width} strokeLinecap="round" pathLength={1}
+		strokeDasharray={dash ? '0.02 0.012' : '1'} strokeDashoffset={dash ? 0 : 1 - p} opacity={dash ? p : 1} />;
+};
+// puntos de corriente recorriendo un camino
+const Flow: React.FC<{d: string; speed?: number; n?: number; color?: string; width?: number}> = ({d, speed = 0.35, n = 14, color = C.redSoft, width = 8}) => {
+	const t = useT();
+	return <path d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap="round" pathLength={1}
+		strokeDasharray={`0.012 ${1 / n - 0.012}`} strokeDashoffset={-t * speed} />;
+};
+const relB = (x: number, R: number) => Math.pow(R, 3) / Math.pow(x * x + R * R, 1.5); // B(x)/B(0) de una espira
+
+// ---------- bobina: corriente circulando y campo sobre el eje ----------
+const Coil: React.FC<Props> = ({visual: v, dur, cues}) => {
+	const t = useT();
+	const draw = useIn(0.2, 1.0);
+	const cx = 150, cy = 290, R = 95, rx = 26, ry = R; // elipse en perspectiva
+	const ring = `M${cx} ${cy - ry} a${rx} ${ry} 0 1 0 0.01 0`;
+	const xs = Array.from({length: 11}, (_, i) => i * 62);
+	const prof = xs.map((x, i) => `${i ? 'L' : 'M'}${cx + x} ${cy - 20 - 150 * relB(x, R)}`).join(' ');
+	const sx = (t * 70) % 640; // sensor que recorre el eje
+	const sB = relB(sx, R);
+	const eqAt = cueAt(cues, v.eqcue, 6);
+	return (
+		<Frame heading={v.heading} dur={dur}>
+			<div style={{display: 'flex', gap: 30, alignItems: 'flex-start'}}>
+				<svg width={880} height={560} viewBox="0 0 880 560" style={{opacity: draw}}>
+					<line x1={cx} y1={cy} x2={850} y2={cy} stroke={C.wire} strokeWidth={3} strokeDasharray="8 8" />
+					<text x={840} y={cy + 36} fill={C.muted} fontSize={26} textAnchor="end" fontFamily={FONT}>eje x</text>
+					{/* campo en el eje: flechas cuya longitud sigue B(x) */}
+					{xs.map((x, i) => {
+						const L = 46 * relB(x, R);
+						return (
+							<g key={i} opacity={interpolate(t, [0.6 + i * 0.12, 1.1 + i * 0.12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
+								<line x1={cx + x - L / 2} y1={cy} x2={cx + x + L / 2} y2={cy} stroke={C.blue} strokeWidth={6} strokeLinecap="round" />
+								<polygon points={`${cx + x + L / 2 + 8},${cy} ${cx + x + L / 2 - 6},${cy - 7} ${cx + x + L / 2 - 6},${cy + 7}`} fill={C.blue} />
+							</g>
+						);
+					})}
+					<Draw d={prof} at={1.0} dur={1.6} stroke={C.blue} width={5} />
+					<text x={cx + 300} y={cy - 190} fill={C.blue} fontSize={26} fontFamily={FONT} fontWeight={700}>B(x) sobre el eje</text>
+					{/* bobina con corriente */}
+					<path d={ring} fill="rgba(47,157,244,0.08)" stroke={C.gold} strokeWidth={10} />
+					<Flow d={ring} />
+					<text x={cx} y={cy + ry + 44} fill={C.white} fontSize={28} fontWeight={700} textAnchor="middle" fontFamily={FONT}>N espiras · radio R</text>
+					<text x={cx - rx - 14} y={cy + 8} fill={C.gold} fontSize={28} fontWeight={800} textAnchor="end" fontFamily={FONT}>I</text>
+					{/* sensor que se desplaza */}
+					<g transform={`translate(${cx + sx}, ${cy})`}>
+						<rect x={-14} y={-30} width={28} height={60} rx={6} fill={C.blue} stroke={C.white} strokeWidth={3} />
+						<text x={0} y={92} fill={C.white} fontSize={26} textAnchor="middle" fontFamily={FONT}>B = {sB.toFixed(2)} B₀</text>
+					</g>
+				</svg>
+				<div style={{flex: 1}}>
+					{v.facts.map((fc: any, i: number) => (
+						<Appear key={i} at={cueAt(cues, fc.cue, 1 + i)} style={{fontSize: 31, lineHeight: 1.3, marginBottom: 22, display: 'flex', gap: 16}}>
+							<span style={{color: C.blue, fontWeight: 800}}>▸</span><span>{fc.text}</span>
+						</Appear>
+					))}
+					<Appear at={eqAt}><EqCard src={v.eq} h={110} glow={interpolate(t - eqAt, [0, 0.4], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} /></Appear>
+				</div>
+			</div>
+		</Frame>
+	);
+};
+
+// ---------- par de Helmholtz: dos bobinas y la meseta de campo ----------
+const Helmholtz: React.FC<Props> = ({visual: v, dur, cues}) => {
+	const t = useT();
+	const draw = useIn(0.2, 1.0);
+	const pairAt = cueAt(cues, v.pairCue, 6);
+	const R = 110, ax = 200, ay = 150, mid = 470; // bobinas en mid ± R/2
+	const X = (u: number) => mid + u * R;          // u en unidades de R
+	const Y = (b: number) => 520 - 230 * b / 1.5;   // b relativo a B(0) de una bobina
+	const us = Array.from({length: 121}, (_, i) => -3 + i * 0.05);
+	const one = us.map((u, i) => `${i ? 'L' : 'M'}${X(u)} ${Y(relB(u, 1))}`).join(' ');
+	const pair = us.map((u, i) => `${i ? 'L' : 'M'}${X(u)} ${Y(relB(u - 0.5, 1) + relB(u + 0.5, 1))}`).join(' ');
+	const ring = (x: number) => `M${x} ${ay - 70} a18 70 0 1 0 0.01 0`;
+	const pulse = 0.5 + 0.5 * Math.sin(t * 3);
+	const show2 = t >= pairAt;
+	return (
+		<Frame heading={v.heading} dur={dur}>
+			<div style={{display: 'flex', gap: 30, alignItems: 'flex-start'}}>
+				<svg width={900} height={560} viewBox="0 0 900 560" style={{opacity: draw}}>
+					<line x1={100} y1={ay} x2={860} y2={ay} stroke={C.wire} strokeWidth={3} strokeDasharray="8 8" />
+					{/* región entre las bobinas */}
+					<rect x={X(-0.5)} y={Y(1.6)} width={R} height={Y(0) - Y(1.6)} fill={C.blue} opacity={show2 ? 0.12 + 0.08 * pulse : 0} />
+					{/* bobinas */}
+					<g opacity={1}><path d={ring(X(show2 ? -0.5 : 0))} fill="none" stroke={C.gold} strokeWidth={9} /><Flow d={ring(X(show2 ? -0.5 : 0))} n={10} /></g>
+					<g opacity={show2 ? 1 : 0}><path d={ring(X(0.5))} fill="none" stroke={C.gold} strokeWidth={9} /><Flow d={ring(X(0.5))} n={10} /></g>
+					{show2 ? <>
+						<line x1={X(-0.5)} y1={ay + 95} x2={X(0.5)} y2={ay + 95} stroke={C.white} strokeWidth={3} />
+						<text x={mid} y={ay + 125} fill={C.white} fontSize={26} textAnchor="middle" fontFamily={FONT}>separación = R</text>
+					</> : null}
+					{/* perfiles */}
+					<line x1={100} y1={Y(0)} x2={860} y2={Y(0)} stroke={C.wire} strokeWidth={2} />
+					<Draw d={one} at={0.8} dur={1.4} stroke={C.white} width={4} dash />
+					<text x={X(1.6)} y={Y(relB(1.6, 1)) - 14} fill={C.muted} fontSize={24} fontFamily={FONT}>una bobina</text>
+					{show2 ? <>
+						<Draw d={pair} at={pairAt + 0.2} dur={1.6} stroke={C.blue} width={6} />
+						<text x={X(-2.9)} y={Y(1.431) - 10} fill={C.blue} fontSize={26} fontWeight={700} fontFamily={FONT}>par de Helmholtz: meseta, 1,43 × B(0)</text>
+					</> : null}
+					<text x={X(0)} y={Y(0) + 32} fill={C.muted} fontSize={24} textAnchor="middle" fontFamily={FONT}>posición sobre el eje</text>
+				</svg>
+				<div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 22}}>
+					{v.eqs.map((e: any, i: number) => <Appear key={i} at={cueAt(cues, e.cue, 1 + i * 2)}><EqCard src={e.src} h={i === 1 ? 104 : 84} /></Appear>)}
+				</div>
+			</div>
+		</Frame>
+	);
+};
+
+const KINDS: Record<string, React.FC<Props>> = {figure: Figure, coil: Coil, helmholtz: Helmholtz, title: Title, bullets: Bullets, equations: Equations, circuit: Circuit, measure: Measure, table: Table, bulbs: Bulbs};
 const Slide: React.FC<Props> = (p) => {
 	const K = KINDS[p.visual.kind];
 	return <PanelCtx.Provider value={!!p.panel}><K {...p} /></PanelCtx.Provider>;
