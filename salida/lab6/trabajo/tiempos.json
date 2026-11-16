@@ -1,0 +1,239 @@
+[
+ {
+  "id": "b0",
+  "start": 0.0,
+  "dur": 21.0333,
+  "voice": 20.137833,
+  "cues": {}
+ },
+ {
+  "id": "b1",
+  "start": 21.0333,
+  "dur": 36.9,
+  "voice": 36.011583,
+  "cues": {
+   "medimos": 10.88,
+   "comparamos la curva": 17.829,
+   "calculamos": 23.796,
+   "comparamos el perfil": 30.325,
+   "El objetivo general": 0.35
+  }
+ },
+ {
+  "id": "b2a",
+  "start": 57.9333,
+  "dur": 64.1333,
+  "voice": 63.237792,
+  "cues": {
+   "cada pedacito": 11.344,
+   "las componentes perpendiculares": 26.132,
+   "solo queda": 31.58,
+   "Para una bobina": 34.693
+  }
+ },
+ {
+  "id": "b2b",
+  "start": 122.0666,
+  "dur": 53.2333,
+  "voice": 52.323417,
+  "cues": {
+   "En el centro": 13.195,
+   "Y de ahí": 25.945,
+   "Su valor de referencia": 41.907,
+   "decae": 6.206
+  }
+ },
+ {
+  "id": "b2c",
+  "start": 175.2999,
+  "dur": 53.6333,
+  "voice": 52.718125,
+  "cues": {
+   "Si el sensor": 7.362,
+   "producen en el punto medio": 31.187,
+   "Y para comparar": 47.154,
+   "En el arreglo de Helmholtz": 23.668
+  }
+ },
+ {
+  "id": "b3",
+  "start": 228.9332,
+  "dur": 26.0667,
+  "voice": 25.158833,
+  "cues": {
+   "Usamos": 0.35,
+   "un sensor": 7.996,
+   "la interfaz": 13.341,
+   "Capstone": 17.945,
+   "y una pista": 18.767
+  }
+ },
+ {
+  "id": "b4a",
+  "start": 254.9999,
+  "dur": 19.8667,
+  "voice": 18.975125,
+  "cues": {
+   "Primero": 0.35,
+   "Deslizamos": 7.779,
+   "y presionamos": 14.723
+  }
+ },
+ {
+  "id": "b4b",
+  "start": 274.8666,
+  "dur": 30.6333,
+  "voice": 29.738792,
+  "cues": {
+   "En el generador": 0.35,
+   "la interfaz registró": 11.452,
+   "Pulsamos": 18.114
+  }
+ },
+ {
+  "id": "b4c",
+  "start": 305.4999,
+  "dur": 21.9,
+  "voice": 21.015208,
+  "cues": {
+   "Repetimos": 0.35,
+   "para un total": 9.584,
+   "A los datos": 11.972
+  }
+ },
+ {
+  "id": "b4d",
+  "start": 327.3999,
+  "dur": 20.0,
+  "voice": 19.099583,
+  "cues": {
+   "Por último": 0.35,
+   "cero coma trescientos ochenta y tres": 12.121,
+   "para calcular": 15.6
+  }
+ },
+ {
+  "id": "b5a",
+  "start": 347.3999,
+  "dur": 29.0667,
+  "voice": 28.174542,
+  "cues": {
+   "máximo en el centro": 1.793,
+   "a tres centímetros": 11.134,
+   "a quince": 17.209,
+   "a veintiún": 21.234
+  }
+ },
+ {
+  "id": "b5b",
+  "start": 376.4666,
+  "dur": 37.0,
+  "voice": 36.114833,
+  "cues": {
+   "La curva": 0.35,
+   "error cuadrático": 10.44,
+   "dio un radio": 17.246,
+   "Los parámetros": 25.254
+  }
+ },
+ {
+  "id": "b5c",
+  "start": 413.4666,
+  "dur": 13.7333,
+  "voice": 12.818875,
+  "cues": {
+   "los datos quedan": 2.435,
+   "siete coma cuatro": 9.308
+  }
+ },
+ {
+  "id": "b6",
+  "start": 427.1999,
+  "dur": 46.0333,
+  "voice": 45.132,
+  "cues": {
+   "registró": 7.843,
+   "arcotangente": 23.002,
+   "Desde dieciocho": 30.065
+  }
+ },
+ {
+  "id": "b7a",
+  "start": 473.2332,
+  "dur": 33.6667,
+  "voice": 32.763125,
+  "cues": {
+   "la permeabilidad da": 24.17,
+   "Para la primera": 6.991,
+   "campo de nueve": 12.038
+  }
+ },
+ {
+  "id": "b7b",
+  "start": 506.8999,
+  "dur": 27.5667,
+  "voice": 26.683083,
+  "cues": {
+   "Su error": 0.35,
+   "siete coma sesenta y seis": 4.608,
+   "siete coma treinta y ocho": 13.124,
+   "ocho coma cero seis": 15.773,
+   "el promedio": 18.99
+  }
+ },
+ {
+  "id": "b7c",
+  "start": 534.4666,
+  "dur": 25.2333,
+  "voice": 24.341292,
+  "cues": {
+   "creció en proporción": 2.563,
+   "pendiente": 8.464,
+   "sale la misma": 19.528
+  }
+ },
+ {
+  "id": "b8a",
+  "start": 559.6999,
+  "dur": 40.4,
+  "voice": 39.502333,
+  "cues": {
+   "posición de la sonda": 16.817,
+   "radio efectivo": 30.218,
+   "la inclinación": 32.758,
+   "la calibración": 35.21,
+   "Los tres errores": 0.35
+  }
+ },
+ {
+  "id": "b8b",
+  "start": 600.0999,
+  "dur": 47.8,
+  "voice": 46.885583,
+  "cues": {
+   "Una sola bobina": 6.625,
+   "uno coma cuarenta y tres": 23.793,
+   "forma una meseta": 30.939,
+   "Por esa región": 40.089
+  }
+ },
+ {
+  "id": "b9",
+  "start": 647.8999,
+  "dur": 54.4333,
+  "voice": 53.549542,
+  "cues": {
+   "comprobamos": 1.528,
+   "Obtuvimos": 15.74,
+   "La componente perpendicular": 32.15,
+   "Y vimos": 40.002
+  }
+ },
+ {
+  "id": "b10",
+  "start": 702.3332,
+  "dur": 4.5,
+  "voice": 0.0,
+  "cues": {}
+ }
+]
