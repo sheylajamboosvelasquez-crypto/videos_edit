@@ -80,6 +80,9 @@ VOZ=clon COQUI_TOS_AGREED=1 ~/.venvs/lab-fisica/bin/python -I proyecto/audio.py
 El resto del flujo (tiempos, tarjetas, subtítulos, armado) no cambia.
 
 ## Pronunciación
+- **No deletrear**: letras sueltas («ene», «i», «erre») y nombres griegos («mu cero», «theta») salen mal y la verificación
+  con Whisper los rechaza («museo», «muro»). Narrar las fórmulas en palabras: «la permeabilidad del vacío, por el número de espiras,
+  por la corriente, dividido entre dos veces el radio». En pantalla y en subtítulos la ecuación va en símbolos.
 - Escribir los números en palabras (como en lab-fisica-narrado).
 - XTTS puede leer «Ohm» a la inglesa: si suena raro, escribir «Om» en el texto narrado (el subtítulo sigue diciendo Ohm).
 - Velocidad en CPU: ~2 s de proceso por cada segundo de audio (8 min de narración ≈ 15-20 min).
